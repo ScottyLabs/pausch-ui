@@ -10,11 +10,9 @@ function App() {
     <div
       className="App"
       onMouseDown={(event) => {
-        console.log("Mouse down");
         setMouseDown(true)
       }}
       onMouseUp={(event) => {
-        console.log("Mouse up");
         setMouseDown(false);
       }}
     >

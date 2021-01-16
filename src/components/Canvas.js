@@ -1,19 +1,7 @@
 import { Container, Table } from "semantic-ui-react"
 import React, { useEffect, useState } from "react"
 
-// Color a cell
-const onMouseOver = (isMouseDown, styles, setStyles, index) => {
-  if (isMouseDown) {
-    const tmpStyles = [...styles]
-    const cellStyle = tmpStyles[index]
-    tmpStyles[index] = {
-      ...tmpStyles[index],
-      backgroundColor: "red"
-    }
-    setStyles(tmpStyles)
-  }
-}
-
+// Styles
 const tableStyle = {
   margin: "10px",
   width: "90%",
@@ -21,6 +9,7 @@ const tableStyle = {
   marginRight: "auto",
   borderColor: "black",
 }
+
 const baseCellStyle = {
   borderColor: "black",
   width: "10px",
@@ -28,21 +17,19 @@ const baseCellStyle = {
   padding: 0,
 }
 
+// Color a cell
+const onMouseOver = (isMouseDown, index) => {
+  if (isMouseDown) {
+    const cell = document.querySelector("#cell" + index);
+    cell.style.backgroundColor = "red";
+  }
+}
+
 const Canvas = (props) => {
-  const { width, height, isMouseDown } = props
-  const [styles, setStyles] = useState([])
+  const { width, height, isMouseDown } = props 
 
   const rows = []
   const cells = []
-
-  useEffect(() => {
-    // Populate styles
-    const tmpStyles = []
-    for (let i = 0; i < height * width; i++) {
-      tmpStyles.push(baseCellStyle)
-    }
-    setStyles(tmpStyles)
-  }, [])
 
   // Populate cells
   for (let i = 0; i < height; i++) {
@@ -51,14 +38,17 @@ const Canvas = (props) => {
       const index = i * width + j
       const cell = (
         <Table.Cell
-          style={styles[index]}
+          style={baseCellStyle}
           id={"cell" + index}
           key={index}
-          onMouseOver={(event) => {
-            onMouseOver(isMouseDown, styles, setStyles, index)
+          onMouseEnter={(event) => {
+            onMouseOver(isMouseDown, index)
+          }}
+          onMouseLeave={(event) => {
+            onMouseOver(isMouseDown, index)
           }}
           onMouseDown={(event) => {
-            onMouseOver(true, styles, setStyles, index)
+            onMouseOver(true, index)
           }}
         ></Table.Cell>
       )
