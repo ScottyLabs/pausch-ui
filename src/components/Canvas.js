@@ -57,6 +57,9 @@ const Canvas = (props) => {
           onMouseOver={(event) => {
             onMouseOver(isMouseDown, styles, setStyles, index)
           }}
+          onMouseDown={(event) => {
+            onMouseOver(true, styles, setStyles, index)
+          }}
         ></Table.Cell>
       )
       row.push(cell)
