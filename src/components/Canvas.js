@@ -1,12 +1,9 @@
-import { Container, Table } from "semantic-ui-react"
+import { Table } from "semantic-ui-react"
 import React, { useEffect, useState } from "react"
 
 // Styles
 const tableStyle = {
-  margin: "10px",
   width: "90%",
-  marginLeft: "auto",
-  marginRight: "auto",
   borderColor: "black",
 }
 
@@ -18,15 +15,19 @@ const baseCellStyle = {
 }
 
 // Color a cell
-const onMouseOver = (isMouseDown, index) => {
+const onMouseOver = (isMouseDown, index, drawMode) => {
   if (isMouseDown) {
-    const cell = document.querySelector("#cell" + index);
-    cell.style.backgroundColor = "red";
+    const cell = document.querySelector("#cell" + index)
+    if (drawMode == "paintbrush") {
+      cell.style.backgroundColor = "red"
+    } else {
+      cell.style.backgroundColor = null
+    }
   }
 }
 
 const Canvas = (props) => {
-  const { width, height, isMouseDown } = props 
+  const { width, height, isMouseDown, drawMode } = props
 
   const rows = []
   const cells = []
@@ -39,23 +40,24 @@ const Canvas = (props) => {
       const cell = (
         <Table.Cell
           style={baseCellStyle}
+          className="canvasCell"
           id={"cell" + index}
           key={index}
           onMouseEnter={(event) => {
-            onMouseOver(isMouseDown, index)
+            onMouseOver(isMouseDown, index, drawMode)
           }}
           onMouseLeave={(event) => {
-            onMouseOver(isMouseDown, index)
+            onMouseOver(isMouseDown, index, drawMode)
           }}
           onMouseDown={(event) => {
-            onMouseOver(true, index)
+            onMouseOver(true, index, drawMode)
           }}
         ></Table.Cell>
       )
       row.push(cell)
       cells.push(cell)
     }
-    rows.push(<Table.Row>{row}</Table.Row>)
+    rows.push(<Table.Row key={i}>{row}</Table.Row>)
   }
   return (
     <Table celled style={tableStyle}>
