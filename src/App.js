@@ -9,10 +9,10 @@ import PreviewControl from "./components/PreviewControl"
 function App() {
   const [isMouseDown, setMouseDown] = useState(false)
   const [drawMode, setDrawMode] = useState("paintbrush")
-  const [playMode, setPlayMode] = useState(false)
+  const [playMode, setPlayMode] = useState("play")
   const [playRate, setPlayRate] = useState(0.5) // duration per frame in seconds
-  const [playState, setPlayState] = useState(0) // to prevent reset race condition
   const [row, setRow] = useState(0)
+  const [color, setColor] = useState({ r: 255, g: 0, b: 0, a: 100 })
 
   const width = 52
   const height = 30
@@ -46,8 +46,8 @@ function App() {
           width={52}
           height={30}
           playMode={playMode}
+          setPlayMode={setPlayMode}
           playRate={playRate}
-          playState={playState}
           row={row}
           setRow={setRow}
         ></Preview>
@@ -68,6 +68,8 @@ function App() {
             <hr
               style={{
                 marginTop: 0,
+                border: "none",
+                height: "3px",
               }}
             />
           </div>
@@ -76,6 +78,7 @@ function App() {
             height={height}
             isMouseDown={isMouseDown}
             drawMode={drawMode}
+            color={color}
           />
         </div>
       </div>
@@ -85,11 +88,14 @@ function App() {
           setPlayMode={setPlayMode}
           playRate={playRate}
           setPlayRate={setPlayRate}
-          playState={playState}
-          setPlayState={setPlayState}
           setRow={setRow}
         />
-        <BrushPanel drawMode={drawMode} setDrawMode={setDrawMode}></BrushPanel>
+        <BrushPanel
+          drawMode={drawMode}
+          setDrawMode={setDrawMode}
+          color={color}
+          setColor={setColor}
+        ></BrushPanel>
       </div>
     </div>
   )
