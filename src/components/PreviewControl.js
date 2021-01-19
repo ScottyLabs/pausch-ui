@@ -8,9 +8,6 @@ const PreviewControl = (props) => {
     setPlayMode,
     playRate,
     setPlayRate,
-    playState,
-    setPlayState,
-    setRow,
   } = props
   const [inputRate, setInputRate] = useState(playRate)
 
@@ -20,25 +17,19 @@ const PreviewControl = (props) => {
         <Grid.Row centered>
           <Button
             icon
-            color={!playMode ? "green" : null}
-            onClick={() => setPlayMode(false)}
+            color={playMode === "pause" ? "green" : null}
+            onClick={() => setPlayMode("pause")}
           >
             <Icon name="pause" />
           </Button>
           <Button
             icon
-            color={playMode ? "green" : null}
-            onClick={() => setPlayMode(true)}
+            color={playMode === "play" ? "green" : null}
+            onClick={() => setPlayMode("play")}
           >
             <Icon name="play" />
           </Button>
-          <Button
-            icon
-            onClick={() => {
-              setRow(0)
-              setPlayState(playState + 1)
-            }}
-          >
+          <Button icon onClick={() => setPlayMode("reset")}>
             <Icon name="redo" />
           </Button>
         </Grid.Row>
@@ -61,7 +52,7 @@ const PreviewControl = (props) => {
             style={{ marginLeft: "1em" }}
             onClick={() => {
               setPlayRate(inputRate)
-              setPlayState(playState + 1)
+              setPlayMode("reset")
             }}
           >
             <Icon name="paper plane" />

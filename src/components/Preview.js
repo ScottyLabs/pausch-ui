@@ -9,23 +9,28 @@ const tableStyle = {
 const baseCellStyle = {
   borderColor: "black",
   width: "10px",
-  height: "30px",
+  height: "80px",
   padding: 0,
 }
 
 const startPlaying = (
   playMode,
+  setPlayMode,
   height,
   previewCells,
   row,
   setRow,
-  playRate,
-  playState
+  playRate
 ) => {
-  if (!playMode && row != 0) {
+  if (playMode === "pause") {
     return
   }
-  
+  if (playMode === "reset") {
+    setRow(0)
+    setPlayMode("play")
+    return
+  }
+
   const cells = document.querySelectorAll(`.row${row}`)
   if (cells) {
     cells.forEach((cell, idx) => {
@@ -40,14 +45,22 @@ const startPlaying = (
 }
 
 const Preview = (props) => {
-  const { width, height, playMode, playRate, row, setRow, playState } = props
+  const { width, height, playMode, setPlayMode, playRate, row, setRow } = props
   const [previewCells, setPreviewCells] = useState([])
 
   useEffect(() => {
     setPreviewCells(document.querySelectorAll(".previewCell"))
   }, [])
 
-  startPlaying(playMode, height, previewCells, row, setRow, playRate, playState)
+  startPlaying(
+    playMode,
+    setPlayMode,
+    height,
+    previewCells,
+    row,
+    setRow,
+    playRate
+  )
 
   const rowContent = []
   for (let i = 0; i < width; i++) {
