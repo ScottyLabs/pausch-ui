@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react"
 
 // Styles
 const tableStyle = {
-  width: "90%",
   borderColor: "black",
+  marginTop: 0
 }
 
 const baseCellStyle = {
@@ -14,6 +14,7 @@ const baseCellStyle = {
   padding: 0,
 }
 
+// TODO: optimize DOM tree traversal by making cell a separate React component
 // Color a cell
 const onMouseOver = (isMouseDown, index, drawMode) => {
   if (isMouseDown) {
@@ -40,9 +41,8 @@ const Canvas = (props) => {
       const cell = (
         <Table.Cell
           style={baseCellStyle}
-          className="canvasCell"
+          className={`canvasCell row${i.toString()}`}
           id={"cell" + index}
-          key={index}
           onMouseEnter={(event) => {
             onMouseOver(isMouseDown, index, drawMode)
           }}
