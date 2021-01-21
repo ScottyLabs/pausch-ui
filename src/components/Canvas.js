@@ -19,7 +19,7 @@ const baseCellStyle = {
 const onMouseOver = (isMouseDown, index, drawMode, color) => {
   if (isMouseDown) {
     const cell = document.querySelector("#cell" + index)
-    if (drawMode == "paintbrush") {
+    if (drawMode === "paintbrush") {
       cell.style.backgroundColor = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`
     } else {
       cell.style.backgroundColor = null
