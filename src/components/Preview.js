@@ -13,6 +13,16 @@ const baseCellStyle = {
   padding: 0,
 }
 
+const colorPreviewCells = (row, previewCells) => {
+  const cells = document.querySelectorAll(`.row${row}`)
+  if (cells) {
+    cells.forEach((cell, idx) => {
+      const previewCell = previewCells[idx]
+      previewCell.style.backgroundColor = cell.style.backgroundColor
+    })
+  }
+}
+
 const startPlaying = (
   playMode,
   setPlayMode,
@@ -31,13 +41,7 @@ const startPlaying = (
     return
   }
 
-  const cells = document.querySelectorAll(`.row${row}`)
-  if (cells) {
-    cells.forEach((cell, idx) => {
-      const previewCell = previewCells[idx]
-      previewCell.style.backgroundColor = cell.style.backgroundColor
-    })
-  }
+  colorPreviewCells(row, previewCells)
 
   setTimeout(() => {
     setRow((row + 1) % height)
@@ -45,7 +49,17 @@ const startPlaying = (
 }
 
 const Preview = (props) => {
-  const { width, height, playMode, setPlayMode, playRate, row, setRow } = props
+  const {
+    width,
+    height,
+    playMode,
+    setPlayMode,
+    playRate,
+    row,
+    setRow,
+    previewValid,
+    setPreviewValid,
+  } = props
   const [previewCells, setPreviewCells] = useState([])
 
   useEffect(() => {
@@ -61,6 +75,11 @@ const Preview = (props) => {
     setRow,
     playRate
   )
+
+  if (playMode == "pause" && !previewValid) {
+    colorPreviewCells(row, previewCells)
+    setPreviewValid(true)
+  }
 
   const rowContent = []
   for (let i = 0; i < width; i++) {

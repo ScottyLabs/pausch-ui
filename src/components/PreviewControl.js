@@ -35,14 +35,14 @@ const PreviewControl = (props) => {
         </Grid.Row>
         <Grid.Row centered>
           <Popup
-            content="Play rate in duration per frame"
+            content="Play rate in seconds per frame"
             trigger={
               <Input
                 placeholder="Rate"
                 style={{
                   width: "5em",
                 }}
-                content={playRate}
+                value={playRate}
                 onChange={(event) => setInputRate(event.target.value)}
               />
             }

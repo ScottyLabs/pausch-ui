@@ -47,11 +47,7 @@ const ColorPicker = (props) => {
   })
 
   return (
-    <div
-      style={{
-        marginRight: "1em",
-      }}
-    >
+    <div>
       <div
         style={styles.swatch}
         onClick={() => setShowColorSelect(!showColorSelect)}
@@ -72,20 +68,30 @@ const ColorPicker = (props) => {
 }
 
 const BrushPanel = (props) => {
-  const { drawMode, setDrawMode, color, setColor } = props
+  const { drawMode, setDrawMode, color, setColor, setPreviewValid } = props
 
   return (
     <Segment>
       <Grid>
         <Grid.Row centered>
           <ColorPicker color={color} setColor={setColor} />
+        </Grid.Row>
+        <Grid.Row centered>
           <Button
             icon
-            floated="right"
             color={drawMode == "paintbrush" ? "green" : null}
             onClick={() => setDrawMode("paintbrush")}
           >
             <Icon name="paint brush" />
+          </Button>
+        </Grid.Row>
+        <Grid.Row centered>
+          <Button
+            icon
+            color={drawMode == "fill" ? "green" : null}
+            onClick={() => setDrawMode("fill")}
+          >
+            <Icon name="tint" />
           </Button>
         </Grid.Row>
         <Grid.Row centered>
@@ -98,7 +104,13 @@ const BrushPanel = (props) => {
           </Button>
         </Grid.Row>
         <Grid.Row centered>
-          <Button icon onClick={clearCanvas}>
+          <Button
+            icon
+            onClick={() => {
+              clearCanvas()
+              setPreviewValid(false)
+            }}
+          >
             <Icon name="trash alternate outline" />
           </Button>
         </Grid.Row>

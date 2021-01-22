@@ -7,6 +7,7 @@ import Preview from "./components/Preview"
 import PreviewControl from "./components/PreviewControl"
 
 function App() {
+  const [previewValid, setPreviewValid] = useState(true)
   const [isMouseDown, setMouseDown] = useState(false)
   const [drawMode, setDrawMode] = useState("paintbrush")
   const [playMode, setPlayMode] = useState("play")
@@ -40,6 +41,7 @@ function App() {
         }}
         onMouseUp={(event) => {
           setMouseDown(false)
+          setPreviewValid(false)
         }}
       >
         <Preview
@@ -50,6 +52,8 @@ function App() {
           playRate={playRate}
           row={row}
           setRow={setRow}
+          previewValid={previewValid}
+          setPreviewValid={setPreviewValid}
         ></Preview>
         <div
           style={{
@@ -69,7 +73,7 @@ function App() {
               style={{
                 marginTop: 0,
                 border: "none",
-                height: "3px",
+                height: "5px",
               }}
             />
           </div>
@@ -79,6 +83,7 @@ function App() {
             isMouseDown={isMouseDown}
             drawMode={drawMode}
             color={color}
+            setPreviewValid={setPreviewValid}
           />
         </div>
       </div>
@@ -95,6 +100,7 @@ function App() {
           setDrawMode={setDrawMode}
           color={color}
           setColor={setColor}
+          setPreviewValid={setPreviewValid}
         ></BrushPanel>
       </div>
     </div>
