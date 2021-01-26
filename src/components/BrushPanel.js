@@ -82,7 +82,7 @@ const BrushPanel = (props) => {
           <Button
             icon
             floated="right"
-            color={drawMode == "paintbrush" ? "green" : null}
+            color={drawMode === "paintbrush" ? "green" : null}
             onClick={() => setDrawMode("paintbrush")}
           >
             <Icon name="paint brush" />
@@ -91,10 +91,19 @@ const BrushPanel = (props) => {
         <Grid.Row centered>
           <Button
             icon
-            color={drawMode == "eraser" ? "green" : null}
+            color={drawMode === "eraser" ? "green" : null}
             onClick={() => setDrawMode("eraser")}
           >
             <Icon name="eraser" />
+          </Button>
+        </Grid.Row>
+        <Grid.Row centered>
+          <Button
+            icon
+            color={drawMode === "selection" ? "green" : null}
+            onClick={() => setDrawMode("selection")}
+          >
+            <Icon name="expand" />
           </Button>
         </Grid.Row>
         <Grid.Row centered>
