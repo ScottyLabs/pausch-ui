@@ -44,6 +44,7 @@ const Canvas = (props) => {
     for (let i = 0; i < height*width; i++) {
       const cell = document.querySelector("#cell" + i)
       cell.style.borderColor = "black";
+      cell.style.borderWidth = "1px";
     }
   }
 
@@ -95,7 +96,8 @@ const Canvas = (props) => {
           if (isWithinSelection(startSq, currSq, i, j)) {
             console.log("true");
             const cell = document.querySelector("#cell" + toIndex(i, j))
-            cell.style.borderColor = "red";
+            cell.style.borderColor = "blue";
+            cell.style.borderWidth = "3px";
           } else {
             // const cell = document.querySelector("#cell" + toIndex(i, j))
             // cell.style.borderColor = "black";
