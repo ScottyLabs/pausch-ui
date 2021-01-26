@@ -13,19 +13,11 @@ const baseCellStyle = {
   height: "30px",
   padding: 0,
 }
-// const selectedCellStyle = {
-//   borderColor: "red",
-//   width: "10px",
-//   height: "30px",
-//   padding: 0,
-// }
 
 
 const Canvas = (props) => {
   const { width, height, isMouseDown, drawMode, color } = props
   const [startSquare, setStartSquare] = useState(null)
-  // const [currIndex, setCurrIndex] = useState(null);
-  // const [prevSquare, setPrevSquare] = useState(null);
 
   const rows = []
   const cells = []
@@ -98,9 +90,6 @@ const Canvas = (props) => {
             const cell = document.querySelector("#cell" + toIndex(i, j))
             cell.style.borderColor = "blue";
             cell.style.borderWidth = "3px";
-          } else {
-            // const cell = document.querySelector("#cell" + toIndex(i, j))
-            // cell.style.borderColor = "black";
           }
         }
       }
