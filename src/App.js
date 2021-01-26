@@ -55,35 +55,15 @@ function App() {
           previewValid={previewValid}
           setPreviewValid={setPreviewValid}
         ></Preview>
-        <div
-          style={{
-            width: "100%",
-            position: "relative",
-          }}
-        >
-          <div
-            id="progressBarContainer"
-            style={{
-              position: "absolute",
-              width: "103%",
-              marginLeft: "-1em",
-            }}
-          >
-            <hr
-              style={{
-                marginTop: 0,
-              }}
-            />
-          </div>
-          <Canvas
-            width={width}
-            height={height}
-            isMouseDown={isMouseDown}
-            drawMode={drawMode}
-            color={color}
-            setPreviewValid={setPreviewValid}
-          />
-        </div>
+        <Canvas
+          width={width}
+          height={height}
+          isMouseDown={isMouseDown}
+          drawMode={drawMode}
+          color={color}
+          setPreviewValid={setPreviewValid}
+          row={row}
+        />
       </div>
       <div id="controls" style={{ marginLeft: "2em" }}>
         <PreviewControl

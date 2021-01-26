@@ -8,14 +8,14 @@ const tableStyle = {
 }
 
 const Canvas = (props) => {
-  const { width, height, isMouseDown, drawMode, color } = props
+  const { width, height, isMouseDown, drawMode, color, row } = props
 
   const rows = []
   const cells = []
 
   // Populate cells
   for (let i = 0; i < height; i++) {
-    const row = []
+    const rowCells = []
     for (let j = 0; j < width; j++) {
       const index = i * width + j
       const cell = (
@@ -27,12 +27,19 @@ const Canvas = (props) => {
           height={height}
           drawMode={drawMode}
           color={color}
+          selectedRow={row}
         />
       )
-      row.push(cell)
+      rowCells.push(cell)
       cells.push(cell)
     }
-    rows.push(<Table.Row key={i}>{row}</Table.Row>)
+    let style = null
+    if (row == i) {
+      style = {
+        border: "solid black 1px"
+      }
+    }
+    rows.push(<Table.Row key={i} style={style}>{rowCells}</Table.Row>)
   }
   return (
     <Table celled style={tableStyle}>

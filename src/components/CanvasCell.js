@@ -1,9 +1,23 @@
 import { Table } from "semantic-ui-react"
 
-const baseCellStyle = {
-  border: "solid white 3px",
+const tableCellStyle = {
+  borderStyle: "solid",
+  borderWidth: "1px",
+  borderColor: "white white white white",
   width: "10px",
   height: "30px",
+  padding: 0
+}
+
+const selectedCellStyle = {
+  ...tableCellStyle,
+  borderColor: "black white black white"
+}
+
+const baseCellStyle = {
+  border: "solid white 3px",
+  width: "100%",
+  height: "100%",
 }
 
 // Utility color flood fill
@@ -90,17 +104,20 @@ const onMouseOver = (isMouseDown, index, width, height, drawMode, color) => {
 }
 
 const CanvasCell = (props) => {
-  const { row, index, isMouseDown, width, height, drawMode, color } = props
-
-  const cellStyle = {
-    ...baseCellStyle,
-  }
+  const {
+    row,
+    index,
+    isMouseDown,
+    width,
+    height,
+    drawMode,
+    color,
+    selectedRow,
+  } = props
 
   return (
     <Table.Cell
-      style={cellStyle}
-      className={`canvasCell row${row.toString()}`}
-      id={"cell" + index}
+      style={selectedRow == row ? selectedCellStyle : tableCellStyle}
       onMouseEnter={(event) => {
         onMouseOver(isMouseDown, index, width, height, drawMode, color)
       }}
@@ -110,7 +127,13 @@ const CanvasCell = (props) => {
       onMouseDown={(event) => {
         onMouseOver(true, index, width, height, drawMode, color)
       }}
-    ></Table.Cell>
+    >
+      <div
+        style={baseCellStyle}
+        className={`canvasCell row${row.toString()}`}
+        id={"cell" + index}
+      />
+    </Table.Cell>
   )
 }
 

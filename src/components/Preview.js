@@ -85,7 +85,10 @@ const Preview = (props) => {
   for (let i = 0; i < width; i++) {
     const cell = (
       <Table.Cell
-        style={baseCellStyle}
+        style={{
+          ...baseCellStyle,
+          transition: `background-color ${playRate/2}s linear`
+        }}
         className="previewCell"
         id={"previewCell" + i}
       ></Table.Cell>
