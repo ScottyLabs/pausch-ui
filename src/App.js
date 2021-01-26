@@ -72,8 +72,6 @@ function App() {
             <hr
               style={{
                 marginTop: 0,
-                border: "none",
-                height: "5px",
               }}
             />
           </div>
