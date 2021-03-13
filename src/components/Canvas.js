@@ -1,5 +1,5 @@
-import { Table } from "semantic-ui-react"
-import React, { useEffect, useState } from "react"
+import { Table, TableBody } from "semantic-ui-react"
+import React from "react"
 import CanvasCell from "./CanvasCell"
 
 // Styles
@@ -8,7 +8,7 @@ const tableStyle = {
 }
 
 const Canvas = (props) => {
-  const { width, height, isMouseDown, drawMode, color, row } = props
+  const { width, height, row } = props;
 
   const rows = []
   const cells = []
@@ -21,13 +21,10 @@ const Canvas = (props) => {
       const cell = (
         <CanvasCell
           row={i}
+          key={index}
           index={index}
-          isMouseDown={isMouseDown}
           width={width}
           height={height}
-          drawMode={drawMode}
-          color={color}
-          selectedRow={row}
         />
       )
       rowCells.push(cell)
@@ -43,7 +40,9 @@ const Canvas = (props) => {
   }
   return (
     <Table celled style={tableStyle}>
-      {rows}
+      <TableBody>
+        {rows}
+      </TableBody>
     </Table>
   )
 }

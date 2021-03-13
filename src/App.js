@@ -1,22 +1,19 @@
 import "semantic-ui-css/semantic.min.css"
 import Canvas from "./components/Canvas"
 import React, { useEffect, useState } from "react"
-import { Button, Grid } from "semantic-ui-react"
 import BrushPanel from "./components/BrushPanel"
 import Preview from "./components/Preview"
 import PreviewControl from "./components/PreviewControl"
+import * as actions from "./actions"
+import { useSelector, useDispatch } from "react-redux"
+
+const CANVAS_WIDTH = 52
+const CANVAS_HEIGHT = 30
+// const CANVAS_WIDTH = 2
+// const CANVAS_HEIGHT = 2
 
 function App() {
-  const [previewValid, setPreviewValid] = useState(true)
-  const [isMouseDown, setMouseDown] = useState(false)
-  const [drawMode, setDrawMode] = useState("paintbrush")
-  const [playMode, setPlayMode] = useState("play")
-  const [playRate, setPlayRate] = useState(0.5) // duration per frame in seconds
-  const [row, setRow] = useState(0)
-  const [color, setColor] = useState({ r: 255, g: 0, b: 0, a: 100 })
-
-  const width = 52
-  const height = 30
+  const dispatch = useDispatch()
 
   return (
     <div
@@ -37,49 +34,19 @@ function App() {
           alignItems: "flex-start",
         }}
         onMouseDown={(event) => {
-          setMouseDown(true)
+          dispatch(actions.brush.setIsMouseDown(true))
         }}
         onMouseUp={(event) => {
-          setMouseDown(false)
-          setPreviewValid(false)
+          dispatch(actions.brush.setIsMouseDown(false))
+          dispatch(actions.preview.setPreviewValid(false))
         }}
       >
-        <Preview
-          width={52}
-          height={30}
-          playMode={playMode}
-          setPlayMode={setPlayMode}
-          playRate={playRate}
-          row={row}
-          setRow={setRow}
-          previewValid={previewValid}
-          setPreviewValid={setPreviewValid}
-        ></Preview>
-        <Canvas
-          width={width}
-          height={height}
-          isMouseDown={isMouseDown}
-          drawMode={drawMode}
-          color={color}
-          setPreviewValid={setPreviewValid}
-          row={row}
-        />
+        <Preview width={CANVAS_WIDTH} height={CANVAS_HEIGHT}></Preview>
+        <Canvas width={CANVAS_WIDTH} height={CANVAS_HEIGHT} />
       </div>
       <div id="controls" style={{ marginLeft: "2em" }}>
-        <PreviewControl
-          playMode={playMode}
-          setPlayMode={setPlayMode}
-          playRate={playRate}
-          setPlayRate={setPlayRate}
-          setRow={setRow}
-        />
-        <BrushPanel
-          drawMode={drawMode}
-          setDrawMode={setDrawMode}
-          color={color}
-          setColor={setColor}
-          setPreviewValid={setPreviewValid}
-        ></BrushPanel>
+        <PreviewControl />
+        <BrushPanel />
       </div>
     </div>
   )

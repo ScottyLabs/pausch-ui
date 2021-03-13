@@ -11,3 +11,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: "Fontello";
+  src: url("./assets/fontello.woff") format("woff");
+}
+
+i.icon.paintbucket {
+  font-family: "Fontello";
+  font-size: 1em;
+  font-weight: bolder;
+}
+
+i.icon.paintbucket:before {
+  content: "\e800";
+}

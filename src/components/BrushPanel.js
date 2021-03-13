@@ -2,6 +2,8 @@ import { Button, Container, Grid, Icon, Segment } from "semantic-ui-react"
 import reactCSS from "reactcss"
 import { SketchPicker } from "react-color"
 import React, { useEffect, useState } from "react"
+import * as actions from "../actions"
+import { useSelector, useDispatch } from "react-redux"
 
 const clearCanvas = () => {
   const cells = document.querySelectorAll(".canvasCell")
@@ -13,7 +15,8 @@ const clearCanvas = () => {
 }
 
 const ColorPicker = (props) => {
-  const { color, setColor } = props
+  const dispatch = useDispatch();
+  const color = useSelector(store => store.color);
   const [showColorSelect, setShowColorSelect] = useState(false)
 
   const styles = reactCSS({
@@ -59,7 +62,7 @@ const ColorPicker = (props) => {
           <div style={styles.cover} onClick={() => setShowColorSelect(false)} />
           <SketchPicker
             color={color}
-            onChange={(newColor) => setColor(newColor.rgb)}
+            onChange={(newColor) => dispatch(actions.brush.setColor(newColor.rgb)) }
           />
         </div>
       ) : null}
@@ -68,19 +71,20 @@ const ColorPicker = (props) => {
 }
 
 const BrushPanel = (props) => {
-  const { drawMode, setDrawMode, color, setColor, setPreviewValid } = props
+  const dispatch = useDispatch();
+  const drawMode = useSelector(store => store.drawMode);
 
   return (
     <Segment>
       <Grid>
         <Grid.Row centered>
-          <ColorPicker color={color} setColor={setColor} />
+          <ColorPicker />
         </Grid.Row>
         <Grid.Row centered>
           <Button
             icon
             color={drawMode == "paintbrush" ? "green" : null}
-            onClick={() => setDrawMode("paintbrush")}
+            onClick={() => dispatch(actions.brush.setDrawMode("paintbrush"))}
           >
             <Icon name="paint brush" />
           </Button>
@@ -89,16 +93,17 @@ const BrushPanel = (props) => {
           <Button
             icon
             color={drawMode == "fill" ? "green" : null}
-            onClick={() => setDrawMode("fill")}
+            onClick={() => dispatch(actions.brush.setDrawMode("fill"))}
           >
-            <Icon name="tint" />
+            {/* Custom icon defined in App.css */}
+            <Icon className="paintbucket" />
           </Button>
         </Grid.Row>
         <Grid.Row centered>
           <Button
             icon
             color={drawMode == "eraser" ? "green" : null}
-            onClick={() => setDrawMode("eraser")}
+            onClick={() => dispatch(actions.brush.setDrawMode("eraser"))}
           >
             <Icon name="eraser" />
           </Button>
@@ -106,9 +111,18 @@ const BrushPanel = (props) => {
         <Grid.Row centered>
           <Button
             icon
+            color={drawMode === "selection" ? "green" : null}
+            onClick={() => dispatch(actions.brush.setDrawMode("selection"))}
+          >
+            <Icon name="expand" />
+          </Button>
+        </Grid.Row>
+        <Grid.Row centered>
+          <Button
+            icon
             onClick={() => {
               clearCanvas()
-              setPreviewValid(false)
+              dispatch(actions.preview.setPreviewValid(false))
             }}
           >
             <Icon name="trash alternate outline" />

@@ -1,14 +1,13 @@
 import { Button, Grid, Icon, Input, Popup, Segment } from "semantic-ui-react"
 import React, { useEffect, useState } from "react"
+import * as actions from "../actions"
+import { useSelector, useDispatch, connect } from "react-redux"
 
 // Controls for preview dynamics
 const PreviewControl = (props) => {
-  const {
-    playMode,
-    setPlayMode,
-    playRate,
-    setPlayRate,
-  } = props
+  const dispatch = useDispatch()
+  const playMode = useSelector((store) => store.playMode)
+  const playRate = useSelector((store) => store.playRate)
   const [inputRate, setInputRate] = useState(playRate)
 
   return (
@@ -18,18 +17,21 @@ const PreviewControl = (props) => {
           <Button
             icon
             color={playMode === "pause" ? "green" : null}
-            onClick={() => setPlayMode("pause")}
+            onClick={() => dispatch(actions.preview.setPlayMode("pause"))}
           >
             <Icon name="pause" />
           </Button>
           <Button
             icon
             color={playMode === "play" ? "green" : null}
-            onClick={() => setPlayMode("play")}
+            onClick={() => dispatch(actions.preview.setPlayMode("play"))}
           >
             <Icon name="play" />
           </Button>
-          <Button icon onClick={() => setPlayMode("reset")}>
+          <Button
+            icon
+            onClick={() => dispatch(actions.preview.setPlayMode("reset"))}
+          >
             <Icon name="redo" />
           </Button>
         </Grid.Row>
@@ -51,8 +53,8 @@ const PreviewControl = (props) => {
             icon
             style={{ marginLeft: "1em" }}
             onClick={() => {
-              setPlayRate(inputRate)
-              setPlayMode("reset")
+              dispatch(actions.preview.setPlayRate(inputRate));
+              dispatch(actions.preview.setPlayMode("reset"));
             }}
           >
             <Icon name="paper plane" />

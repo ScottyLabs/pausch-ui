@@ -1,5 +1,7 @@
-import { Table } from "semantic-ui-react"
+import { Table, TableBody } from "semantic-ui-react"
 import React, { useEffect, useState } from "react"
+import * as actions from "../actions"
+import { useSelector, useDispatch } from "react-redux"
 
 // Styles
 const tableStyle = {
@@ -23,62 +25,74 @@ const colorPreviewCells = (row, previewCells) => {
   }
 }
 
-const startPlaying = (
-  playMode,
-  setPlayMode,
+const startPlaying = async (
   height,
   previewCells,
-  row,
-  setRow,
-  playRate
+  playMode,
+  previewRow,
+  playRate,
+  renderTask,
+  setRenderTask,
+  dispatch
 ) => {
   if (playMode === "pause") {
     return
   }
   if (playMode === "reset") {
-    setRow(0)
-    setPlayMode("play")
+    console.log("Reset activated");
+    if (renderTask.timer != null) {
+      console.log("Cleared task", renderTask.timer);
+      await clearTimeout(renderTask.timer);
+      setRenderTask({ });
+    }
+    await dispatch(actions.preview.resetPreview())
     return
   }
 
-  colorPreviewCells(row, previewCells)
+  colorPreviewCells(previewRow, previewCells)
 
-  setTimeout(() => {
-    setRow((row + 1) % height)
-  }, playRate * 1000)
+  const now = Date.now();
+  const delay = playRate * 1000;
+  if (now - renderTask.time >= delay) {
+    // Check time to prevent race conditions
+    const timer = setTimeout(() => {
+      dispatch(actions.preview.setPreviewRow((previewRow + 1) % height))
+    }, delay);
+    console.log("Timer:", timer);
+    setRenderTask({ timer, time: now });
+  }
+
 }
 
 const Preview = (props) => {
-  const {
-    width,
-    height,
-    playMode,
-    setPlayMode,
-    playRate,
-    row,
-    setRow,
-    previewValid,
-    setPreviewValid,
-  } = props
+  const { width, height } = props
+  const dispatch = useDispatch()
+  const playMode = useSelector((store) => store.playMode)
+  const playRate = useSelector((store) => store.playRate)
+  const previewRow = useSelector((store) => store.previewRow)
+  const previewValid = useSelector((store) => store.previewValid)
+
   const [previewCells, setPreviewCells] = useState([])
+  const [renderTask, setRenderTask] = useState({ time: Date.now(), timer: null })
 
   useEffect(() => {
     setPreviewCells(document.querySelectorAll(".previewCell"))
   }, [])
 
   startPlaying(
-    playMode,
-    setPlayMode,
     height,
     previewCells,
-    row,
-    setRow,
-    playRate
+    playMode,
+    previewRow,
+    playRate,
+    renderTask,
+    setRenderTask,
+    dispatch
   )
 
-  if (playMode == "pause" && !previewValid) {
-    colorPreviewCells(row, previewCells)
-    setPreviewValid(true)
+  if (playMode === "pause" && !previewValid) {
+    colorPreviewCells(previewRow, previewCells)
+    dispatch(actions.preview.setPreviewValid(true))
   }
 
   const rowContent = []
@@ -87,10 +101,11 @@ const Preview = (props) => {
       <Table.Cell
         style={{
           ...baseCellStyle,
-          transition: `background-color ${playRate/2}s linear`
+          transition: `background-color ${playRate / 2}s linear`,
         }}
         className="previewCell"
         id={"previewCell" + i}
+        key={i}
       ></Table.Cell>
     )
     rowContent.push(cell)
@@ -98,7 +113,9 @@ const Preview = (props) => {
 
   return (
     <Table celled style={tableStyle}>
-      <Table.Row key="0">{rowContent}</Table.Row>
+      <TableBody>
+        <Table.Row key="0">{rowContent}</Table.Row>
+      </TableBody>
     </Table>
   )
 }
