@@ -26,6 +26,16 @@ const previewReducer = (state, action) => {
       previewRow: 0,
       playMode: "pause"
     }
+  } else if (action.type === "INCREMENT_PREVIEW_ROW") {
+    if (state.playMode === "pause") {
+      // Ignore row increments while paused
+      // Fixes race condition
+      return state;
+    }
+    return {
+      ...state,
+      previewRow: (state.previewRow + 1) % state.height
+    }
   }
 }
 

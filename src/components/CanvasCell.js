@@ -1,7 +1,7 @@
 import { Table } from "semantic-ui-react"
 import React, { useState } from "react"
 import * as actions from "../actions"
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector, useDispatch, shallowEqual } from "react-redux"
 
 const tableCellStyle = {
   borderStyle: "solid",
@@ -150,7 +150,7 @@ const CanvasCell = (props) => {
   const { row, index, width, height } = props
   const isMouseDown = useSelector(store => store.isMouseDown);
   const drawMode = useSelector(store => store.drawMode);
-  const color= useSelector(store => store.color);
+  const color= useSelector(store => store.color, shallowEqual);
   const previewRow = useSelector(store => store.previewRow);
 
   const [startSquare, setStartSquare] = useState(null)

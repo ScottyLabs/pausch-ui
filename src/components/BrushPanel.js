@@ -3,7 +3,7 @@ import reactCSS from "reactcss"
 import { SketchPicker } from "react-color"
 import React, { useEffect, useState } from "react"
 import * as actions from "../actions"
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector, useDispatch, shallowEqual } from "react-redux"
 
 const clearCanvas = () => {
   const cells = document.querySelectorAll(".canvasCell")
@@ -16,7 +16,7 @@ const clearCanvas = () => {
 
 const ColorPicker = (props) => {
   const dispatch = useDispatch();
-  const color = useSelector(store => store.color);
+  const color = useSelector(store => store.color, shallowEqual);
   const [showColorSelect, setShowColorSelect] = useState(false)
 
   const styles = reactCSS({

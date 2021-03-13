@@ -1,7 +1,7 @@
 import { Table, TableBody } from "semantic-ui-react"
 import React, { useEffect, useState } from "react"
 import * as actions from "../actions"
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector, useDispatch, shallowEqual } from "react-redux"
 
 // Styles
 const tableStyle = {
@@ -39,13 +39,11 @@ const startPlaying = async (
     return
   }
   if (playMode === "reset") {
-    console.log("Reset activated");
+    dispatch(actions.preview.resetPreview())
     if (renderTask.timer != null) {
-      console.log("Cleared task", renderTask.timer);
-      await clearTimeout(renderTask.timer);
+      clearTimeout(renderTask.timer);
       setRenderTask({ });
     }
-    await dispatch(actions.preview.resetPreview())
     return
   }
 
@@ -56,9 +54,8 @@ const startPlaying = async (
   if (now - renderTask.time >= delay) {
     // Check time to prevent race conditions
     const timer = setTimeout(() => {
-      dispatch(actions.preview.setPreviewRow((previewRow + 1) % height))
+      dispatch(actions.preview.incrementPreviewRow())
     }, delay);
-    console.log("Timer:", timer);
     setRenderTask({ timer, time: now });
   }
 

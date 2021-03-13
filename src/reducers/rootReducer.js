@@ -1,8 +1,12 @@
 import brushReducer from "./brushReducer";
 import previewReducer from "./previewReducer";
+import canvasReducer from "./canvasReducer";
 
 // Base redux store state
 const initState = {
+  // Canvas-related
+  height: 1,
+  width: 1,
   // Execution/preview-related
   playRate: 0.5,
   playMode: "play",
@@ -18,7 +22,8 @@ const initState = {
 const rootReducer = (state = initState, action) => {
   const reducerMap = {
     "brush": brushReducer,
-    "preview": previewReducer
+    "preview": previewReducer,
+    "canvas": canvasReducer
   }
   // Call the appropriate reducer based on the specified action category
   const reducer = reducerMap[action.category];
@@ -28,8 +33,6 @@ const rootReducer = (state = initState, action) => {
       state = initState;
     }
   }
-  console.log(action);
-  console.log(state);
   return state;
 }
 

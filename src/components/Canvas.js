@@ -1,6 +1,8 @@
 import { Table, TableBody } from "semantic-ui-react"
 import React from "react"
 import CanvasCell from "./CanvasCell"
+import { useDispatch } from "react-redux";
+import * as actions from "../actions";
 
 // Styles
 const tableStyle = {
@@ -9,6 +11,8 @@ const tableStyle = {
 
 const Canvas = (props) => {
   const { width, height, row } = props;
+  const dispatch = useDispatch();
+  dispatch(actions.canvas.setDimensions(width, height));
 
   const rows = []
   const cells = []

@@ -30,10 +30,16 @@ export const setPreviewRow = (previewRow) => {
   }
 }
 
-
 export const resetPreview = () => {
   return {
     type: "RESET_PREVIEW",
     category: "preview",
+  }
+}
+
+export const incrementPreviewRow = () => {
+  return {
+    type: "INCREMENT_PREVIEW_ROW",
+    category: "preview"
   }
 }
