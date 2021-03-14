@@ -1,9 +1,8 @@
 import { Table } from "semantic-ui-react"
 import React from "react"
 import { useSelector, useDispatch, shallowEqual } from "react-redux"
-import bucketFill from "./brushes/bucketFill"
-import { finishSelection } from "./brushes/selection"
-import { startSelection } from "./brushes/selection"
+import bucketFill from "./canvas-actions/bucketFill"
+import { startSelection, finishSelection } from "./canvas-actions/selection"
 
 const tableCellStyle = {
   border: "solid white 3px",

@@ -8,3 +8,12 @@ export const toIndex = (row, col, width) => {
   let index = row * width + col
   return index
 }
+
+export const clearCanvas = () => {
+  const cells = document.querySelectorAll(".canvasCell")
+  if (cells) {
+    cells.forEach((cell) => {
+      cell.style.backgroundColor = null
+    })
+  }
+}

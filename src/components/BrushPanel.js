@@ -4,16 +4,9 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux"
 import reactCSS from "reactcss"
 import { Button, Grid, Icon, Segment } from "semantic-ui-react"
 import * as actions from "../actions"
-import { exportToPNG } from "./brushes/exportCanvas"
-
-const clearCanvas = () => {
-  const cells = document.querySelectorAll(".canvasCell")
-  if (cells) {
-    cells.forEach((cell) => {
-      cell.style.backgroundColor = null
-    })
-  }
-}
+import { exportToPNG } from "./canvas-actions/exportCanvas"
+import CanvasImport from "./CanvasImport"
+import { clearCanvas } from "./canvas-actions/utility"
 
 const ColorPicker = (props) => {
   const dispatch = useDispatch()
@@ -81,7 +74,7 @@ const BrushPanel = (props) => {
 
   return (
     <Segment>
-      <Grid>
+      <Grid style={{padding: "5px"}}>
         <Grid.Row centered>
           <ColorPicker />
         </Grid.Row>
@@ -136,6 +129,9 @@ const BrushPanel = (props) => {
           >
             <Icon name="trash alternate outline" />
           </Button>
+        </Grid.Row>
+        <Grid.Row centered>
+          <CanvasImport />
         </Grid.Row>
       </Grid>
     </Segment>
