@@ -8,7 +8,7 @@ const initState = {
   height: 1,
   width: 1,
   // Execution/preview-related
-  playRate: 1,
+  playRate: 0.5,
   playMode: "play",
   previewValid: true,
   previewRow: 0,
