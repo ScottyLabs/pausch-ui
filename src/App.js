@@ -6,14 +6,24 @@ import Preview from "./components/Preview"
 import PreviewControl from "./components/PreviewControl"
 import * as actions from "./actions"
 import { useSelector, useDispatch } from "react-redux"
+import PreviewProgressIndicator from "./components/PreviewProgressIndicator"
 
 const CANVAS_WIDTH = 52
 const CANVAS_HEIGHT = 30
-// const CANVAS_WIDTH = 2
-// const CANVAS_HEIGHT = 2
+
+const indicatorWidth = 100 / (CANVAS_WIDTH + 1)
+const contentWidth = (100 * CANVAS_WIDTH) / (CANVAS_WIDTH + 1)
+
+const contentContainerStyle = {
+  display: "grid",
+  width: "100%",
+  columnGap: "10px",
+  gridTemplateColumns: `${indicatorWidth}fr ${contentWidth}fr`,
+}
 
 function App() {
   const dispatch = useDispatch()
+  const [isMouseDown, setIsMouseDown] = useState(false)
 
   return (
     <div
@@ -27,22 +37,23 @@ function App() {
     >
       <div
         id="content"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          flexGrow: 30,
-          alignItems: "flex-start",
-        }}
+        style={contentContainerStyle}
         onMouseDown={(event) => {
-          dispatch(actions.brush.setIsMouseDown(true))
+          setIsMouseDown(true)
         }}
         onMouseUp={(event) => {
-          dispatch(actions.brush.setIsMouseDown(false))
+          setIsMouseDown(false)
           dispatch(actions.preview.setPreviewValid(false))
         }}
       >
-        <Preview width={CANVAS_WIDTH} height={CANVAS_HEIGHT}></Preview>
-        <Canvas width={CANVAS_WIDTH} height={CANVAS_HEIGHT} />
+        <div />
+        <Preview width={CANVAS_WIDTH} height={CANVAS_HEIGHT} />
+        <PreviewProgressIndicator height={CANVAS_HEIGHT} />
+        <Canvas
+          width={CANVAS_WIDTH}
+          height={CANVAS_HEIGHT}
+          isMouseDown={isMouseDown}
+        />
       </div>
       <div id="controls" style={{ marginLeft: "2em" }}>
         <PreviewControl />

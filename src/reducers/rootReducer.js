@@ -8,10 +8,11 @@ const initState = {
   height: 1,
   width: 1,
   // Execution/preview-related
-  playRate: 0.5,
+  playRate: 1,
   playMode: "play",
   previewValid: true,
   previewRow: 0,
+  lastRenderTime: 0,
   // Brush-related 
   isMouseDown: false,
   drawMode: "paintbrush",

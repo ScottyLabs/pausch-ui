@@ -1,18 +1,29 @@
 import { Table, TableBody } from "semantic-ui-react"
 import React from "react"
 import CanvasCell from "./CanvasCell"
-import { useDispatch } from "react-redux";
-import * as actions from "../actions";
+import { useDispatch } from "react-redux"
+import * as actions from "../actions"
+import IndicatorCell from "./IndicatorCell"
 
 // Styles
-const tableStyle = {
-  marginTop: 0,
+const makeCanvasStyle = (width) => {
+  const indicatorWidth = 100 / (width + 1)
+  const contentWidth = (100 * width) / (width + 1)
+
+  return {
+    display: "grid",
+    width: "100%",
+    "column-gap": "10px",
+    "grid-template-columns": `${indicatorWidth}fr ${contentWidth}fr`,
+  }
 }
 
 const Canvas = (props) => {
-  const { width, height, row } = props;
-  const dispatch = useDispatch();
-  dispatch(actions.canvas.setDimensions(width, height));
+  const { width, height, row, isMouseDown } = props
+  const dispatch = useDispatch()
+  dispatch(actions.canvas.setDimensions(width, height))
+
+  const canvasStyle = makeCanvasStyle(width)
 
   const rows = []
   const cells = []
@@ -20,6 +31,7 @@ const Canvas = (props) => {
   // Populate cells
   for (let i = 0; i < height; i++) {
     const rowCells = []
+
     for (let j = 0; j < width; j++) {
       const index = i * width + j
       const cell = (
@@ -29,6 +41,7 @@ const Canvas = (props) => {
           index={index}
           width={width}
           height={height}
+          isMouseDown={isMouseDown}
         />
       )
       rowCells.push(cell)
@@ -37,16 +50,18 @@ const Canvas = (props) => {
     let style = null
     if (row == i) {
       style = {
-        border: "solid black 1px"
+        border: "solid black 1px",
       }
     }
-    rows.push(<Table.Row key={i} style={style}>{rowCells}</Table.Row>)
+    rows.push(
+      <Table.Row key={i} style={style}>
+        {rowCells}
+      </Table.Row>
+    )
   }
   return (
-    <Table celled style={tableStyle}>
-      <TableBody>
-        {rows}
-      </TableBody>
+    <Table celled style={{ marginTop: 0 }}>
+      <TableBody>{rows}</TableBody>
     </Table>
   )
 }

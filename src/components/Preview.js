@@ -25,40 +25,12 @@ const colorPreviewCells = (row, previewCells) => {
   }
 }
 
-const startPlaying = async (
-  height,
-  previewCells,
-  playMode,
-  previewRow,
-  playRate,
-  renderTask,
-  setRenderTask,
-  dispatch
-) => {
+const startPlaying = async (previewCells, playMode, previewRow) => {
   if (playMode === "pause") {
-    return
-  }
-  if (playMode === "reset") {
-    dispatch(actions.preview.resetPreview())
-    if (renderTask.timer != null) {
-      clearTimeout(renderTask.timer);
-      setRenderTask({ });
-    }
     return
   }
 
   colorPreviewCells(previewRow, previewCells)
-
-  const now = Date.now();
-  const delay = playRate * 1000;
-  if (now - renderTask.time >= delay) {
-    // Check time to prevent race conditions
-    const timer = setTimeout(() => {
-      dispatch(actions.preview.incrementPreviewRow())
-    }, delay);
-    setRenderTask({ timer, time: now });
-  }
-
 }
 
 const Preview = (props) => {
@@ -70,22 +42,12 @@ const Preview = (props) => {
   const previewValid = useSelector((store) => store.previewValid)
 
   const [previewCells, setPreviewCells] = useState([])
-  const [renderTask, setRenderTask] = useState({ time: Date.now(), timer: null })
 
   useEffect(() => {
     setPreviewCells(document.querySelectorAll(".previewCell"))
   }, [])
 
-  startPlaying(
-    height,
-    previewCells,
-    playMode,
-    previewRow,
-    playRate,
-    renderTask,
-    setRenderTask,
-    dispatch
-  )
+  startPlaying(previewCells, playMode, previewRow)
 
   if (playMode === "pause" && !previewValid) {
     colorPreviewCells(previewRow, previewCells)

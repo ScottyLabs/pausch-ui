@@ -24,17 +24,26 @@ const previewReducer = (state, action) => {
     return {
       ...state,
       previewRow: 0,
-      playMode: "pause"
+      playMode: "play"
     }
   } else if (action.type === "INCREMENT_PREVIEW_ROW") {
     if (state.playMode === "pause") {
-      // Ignore row increments while paused
-      // Fixes race condition
+      // Fixes race condition: row updates while paused
       return state;
     }
-    return {
-      ...state,
-      previewRow: (state.previewRow + 1) % state.height
+    const { lastRenderTime } = state;
+    const now = Date.now();
+    const delay = state.playRate * 1000;
+
+    if (now - lastRenderTime >= delay) {
+      // Fixes race condition: double increments
+      return {
+        ...state,
+        previewRow: (state.previewRow + 1) % state.height,
+        lastRenderTime: now
+      }
+    } else {
+      return state;
     }
   }
 }
