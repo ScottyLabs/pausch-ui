@@ -1,9 +1,10 @@
-import { Button, Container, Grid, Icon, Segment } from "semantic-ui-react"
-import reactCSS from "reactcss"
+import React, { useState } from "react"
 import { SketchPicker } from "react-color"
-import React, { useEffect, useState } from "react"
+import { shallowEqual, useDispatch, useSelector } from "react-redux"
+import reactCSS from "reactcss"
+import { Button, Grid, Icon, Segment } from "semantic-ui-react"
 import * as actions from "../actions"
-import { useSelector, useDispatch, shallowEqual } from "react-redux"
+import { exportToPNG } from "./brushes/exportCanvas"
 
 const clearCanvas = () => {
   const cells = document.querySelectorAll(".canvasCell")
@@ -15,8 +16,8 @@ const clearCanvas = () => {
 }
 
 const ColorPicker = (props) => {
-  const dispatch = useDispatch();
-  const color = useSelector(store => store.color, shallowEqual);
+  const dispatch = useDispatch()
+  const color = useSelector((store) => store.color, shallowEqual)
   const [showColorSelect, setShowColorSelect] = useState(false)
 
   const styles = reactCSS({
@@ -62,7 +63,9 @@ const ColorPicker = (props) => {
           <div style={styles.cover} onClick={() => setShowColorSelect(false)} />
           <SketchPicker
             color={color}
-            onChange={(newColor) => dispatch(actions.brush.setColor(newColor.rgb)) }
+            onChange={(newColor) =>
+              dispatch(actions.brush.setColor(newColor.rgb))
+            }
           />
         </div>
       ) : null}
@@ -71,8 +74,10 @@ const ColorPicker = (props) => {
 }
 
 const BrushPanel = (props) => {
-  const dispatch = useDispatch();
-  const drawMode = useSelector(store => store.drawMode);
+  const dispatch = useDispatch()
+  const drawMode = useSelector((store) => store.drawMode)
+  const width = useSelector((store) => store.width);
+  const height = useSelector((store) => store.height);
 
   return (
     <Segment>
@@ -88,8 +93,6 @@ const BrushPanel = (props) => {
           >
             <Icon name="paint brush" />
           </Button>
-        </Grid.Row>
-        <Grid.Row centered>
           <Button
             icon
             color={drawMode == "fill" ? "green" : null}
@@ -107,8 +110,6 @@ const BrushPanel = (props) => {
           >
             <Icon name="eraser" />
           </Button>
-        </Grid.Row>
-        <Grid.Row centered>
           <Button
             icon
             color={drawMode === "selection" ? "green" : null}
@@ -118,6 +119,14 @@ const BrushPanel = (props) => {
           </Button>
         </Grid.Row>
         <Grid.Row centered>
+          <Button
+            icon
+            onClick={() => {
+              exportToPNG(width, height);
+            }}
+          >
+            <Icon name="save outline" />
+          </Button>
           <Button
             icon
             onClick={() => {

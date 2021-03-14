@@ -1,29 +1,13 @@
-import { Table, TableBody } from "semantic-ui-react"
 import React from "react"
-import CanvasCell from "./CanvasCell"
 import { useDispatch } from "react-redux"
+import { Table, TableBody } from "semantic-ui-react"
 import * as actions from "../actions"
-import IndicatorCell from "./IndicatorCell"
-
-// Styles
-const makeCanvasStyle = (width) => {
-  const indicatorWidth = 100 / (width + 1)
-  const contentWidth = (100 * width) / (width + 1)
-
-  return {
-    display: "grid",
-    width: "100%",
-    "column-gap": "10px",
-    "grid-template-columns": `${indicatorWidth}fr ${contentWidth}fr`,
-  }
-}
+import CanvasCell from "./CanvasCell"
 
 const Canvas = (props) => {
   const { width, height, row, isMouseDown } = props
   const dispatch = useDispatch()
   dispatch(actions.canvas.setDimensions(width, height))
-
-  const canvasStyle = makeCanvasStyle(width)
 
   const rows = []
   const cells = []
@@ -48,7 +32,7 @@ const Canvas = (props) => {
       cells.push(cell)
     }
     let style = null
-    if (row == i) {
+    if (row === i) {
       style = {
         border: "solid black 1px",
       }
