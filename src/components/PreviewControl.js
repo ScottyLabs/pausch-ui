@@ -42,37 +42,59 @@ const PreviewControl = (props) => {
     timer: null,
   })
 
-
   handlePlayMode(playMode, playRate, renderTask, setRenderTask, dispatch)
 
   return (
     <Segment>
       <Grid>
         <Grid.Row centered>
-          <Button
-            icon
-            color={playMode === "pause" ? "green" : null}
-            onClick={() => dispatch(actions.preview.setPlayMode("pause"))}
-          >
-            <Icon name="pause" />
-          </Button>
-          <Button
-            icon
-            color={playMode === "play" ? "green" : null}
-            onClick={() => dispatch(actions.preview.setPlayMode("play"))}
-          >
-            <Icon name="play" />
-          </Button>
-          <Button
-            icon
-            onClick={() => dispatch(actions.preview.setPlayMode("reset"))}
-          >
-            <Icon name="redo" />
-          </Button>
+          <Popup
+            content="Pause"
+            delay={250}
+            on="hover"
+            trigger={
+              <Button
+                icon
+                color={playMode === "pause" ? "green" : null}
+                onClick={() => dispatch(actions.preview.setPlayMode("pause"))}
+              >
+                <Icon name="pause" />
+              </Button>
+            }
+          />
+          <Popup
+            content="Play"
+            delay={250}
+            on="hover"
+            trigger={
+              <Button
+                icon
+                color={playMode === "play" ? "green" : null}
+                onClick={() => dispatch(actions.preview.setPlayMode("play"))}
+              >
+                <Icon name="play" />
+              </Button>
+            }
+          />
+          <Popup
+            content="Reset"
+            delay={250}
+            on="hover"
+            trigger={
+              <Button
+                icon
+                onClick={() => dispatch(actions.preview.setPlayMode("reset"))}
+              >
+                <Icon name="redo" />
+              </Button>
+            }
+          />
         </Grid.Row>
         <Grid.Row centered>
           <Popup
             content="Play rate in seconds per frame"
+            delay={250}
+            on="hover"
             trigger={
               <Input
                 placeholder="Rate"
@@ -84,16 +106,23 @@ const PreviewControl = (props) => {
               />
             }
           />
-          <Button
-            icon
-            style={{ marginLeft: "1em" }}
-            onClick={() => {
-              dispatch(actions.preview.setPlayRate(inputRate))
-              dispatch(actions.preview.setPlayMode("reset"))
-            }}
-          >
-            <Icon name="paper plane" />
-          </Button>
+          <Popup
+            content="Save play rate"
+            delay={250}
+            on="hover"
+            trigger={
+              <Button
+                icon
+                style={{ marginLeft: "1em" }}
+                onClick={() => {
+                  dispatch(actions.preview.setPlayRate(inputRate))
+                  dispatch(actions.preview.setPlayMode("reset"))
+                }}
+              >
+                <Icon name="angle double right" />
+              </Button>
+            }
+          />
         </Grid.Row>
       </Grid>
     </Segment>
