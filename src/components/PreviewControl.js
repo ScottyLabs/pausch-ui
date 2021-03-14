@@ -34,12 +34,12 @@ const PreviewControl = (props) => {
   const dispatch = useDispatch()
   const playMode = useSelector((store) => store.playMode)
   const playRate = useSelector((store) => store.playRate)
-  const height = useSelector((store) => store.height);
-  const width = useSelector((store) => store.width);
+  const height = useSelector((store) => store.height)
+  const width = useSelector((store) => store.width)
   // Keep this to subscribe to changes to previewRow for re-rendering
   const previewRow = useSelector((store) => store.previewRow)
   const [inputRate, setInputRate] = useState(playRate)
-  const [inputHeight, setInputHeight] = useState(height);
+  const [inputHeight, setInputHeight] = useState(height)
   const [renderTask, setRenderTask] = useState({
     time: 0,
     timer: null,
@@ -106,6 +106,12 @@ const PreviewControl = (props) => {
                 }}
                 value={inputRate}
                 onChange={(event) => setInputRate(event.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    dispatch(actions.preview.setPlayRate(inputRate))
+                    dispatch(actions.preview.setPlayMode("reset"))
+                  }
+                }}
               />
             }
           />
@@ -140,6 +146,12 @@ const PreviewControl = (props) => {
                 }}
                 value={inputHeight}
                 onChange={(event) => setInputHeight(event.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    dispatch(actions.canvas.setDimensions(width, inputHeight))
+                    dispatch(actions.preview.resetPreview())
+                  }
+                }}
               />
             }
           />

@@ -1,7 +1,7 @@
 import { Table, TableBody } from "semantic-ui-react"
 import React, { useEffect, useState } from "react"
 import * as actions from "../actions"
-import { useSelector, useDispatch, shallowEqual } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 
 // Styles
 const stickyStyle = {
