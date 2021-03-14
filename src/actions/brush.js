@@ -21,3 +21,11 @@ export const setIsMouseDown = (isMouseDown) => {
     isMouseDown
   }
 }
+
+export const setStartSquare = (startSquare) => {
+  return {
+    type: "SET_START_SQUARE",
+    category: "brush",
+    startSquare
+  }
+}

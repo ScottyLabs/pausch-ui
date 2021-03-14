@@ -15,6 +15,11 @@ const brushReducer = (state, action) => {
       ...state,
       isMouseDown: action.isMouseDown
     }
+  } else if (action.type === "SET_START_SQUARE") {
+    return {
+      ...state,
+      startSquare: action.startSquare
+    }
   }
 }
 

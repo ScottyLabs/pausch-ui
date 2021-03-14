@@ -1,6 +1,6 @@
 import { toCoordinates } from "./utility"
 
-// Utility color flood fill
+// Queue-based recursive flood fill
 const floodFill = (
   cells,
   startRow,
@@ -46,8 +46,6 @@ const floodFill = (
 
 // Perform the bucket fill brush
 const bucketFill = (cell, index, width, height, dstColor) => {
-  console.log("Bucket fill")
-
   const cells = document.querySelectorAll(".canvasCell")
   const srcColor = cell.style.backgroundColor
   const [startRow, startCol] = toCoordinates(index, width)
