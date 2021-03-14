@@ -26,8 +26,8 @@ export const finishSelection = (
   const minCol = Math.min(square[1], currSquare[1])
   const maxCol = Math.max(square[1], currSquare[1])
 
-  for (let i = minRow; i < maxRow; i++) {
-    for (let j = minCol; j < maxCol; j++) {
+  for (let i = minRow; i <= maxRow; i++) {
+    for (let j = minCol; j <= maxCol; j++) {
       const cell = document.querySelector("#cell" + toIndex(i, j, width))
         cell.style.borderColor = "blue"
         cell.style.borderWidth = "3px"

@@ -45,6 +45,12 @@ function App() {
           setIsMouseDown(false)
           dispatch(actions.preview.setPreviewValid(false))
         }}
+        onTouchStart={(event) => {
+          setIsMouseDown(true)
+        }}
+        onTouchEnd={(event) => {
+          setIsMouseDown(false)
+        }}
       >
         <div />
         <Preview width={CANVAS_WIDTH} height={CANVAS_HEIGHT} />
