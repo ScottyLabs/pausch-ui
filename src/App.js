@@ -14,6 +14,12 @@ const CANVAS_HEIGHT = 30
 const indicatorWidth = 100 / (CANVAS_WIDTH + 1)
 const contentWidth = (100 * CANVAS_WIDTH) / (CANVAS_WIDTH + 1)
 
+const appContainerStyle = {
+  display: "grid",
+  gridTemplateColumns: "95fr 5fr",
+  padding: "3em",
+}
+
 const contentContainerStyle = {
   display: "grid",
   width: "100%",
@@ -21,20 +27,14 @@ const contentContainerStyle = {
   gridTemplateColumns: `${indicatorWidth}fr ${contentWidth}fr`,
 }
 
+const controlsContainerStyle = { marginLeft: "2em", width: "15vw" }
+
 function App() {
   const dispatch = useDispatch()
   const [isMouseDown, setIsMouseDown] = useState(false)
 
   return (
-    <div
-      className="App"
-      style={{
-        display: "flex",
-        justifyContent: "space-evenly",
-        alignItems: "flex-start",
-        padding: "3em",
-      }}
-    >
+    <div className="App" style={appContainerStyle}>
       <div
         id="content"
         style={contentContainerStyle}
@@ -55,7 +55,7 @@ function App() {
           isMouseDown={isMouseDown}
         />
       </div>
-      <div id="controls" style={{ marginLeft: "2em" }}>
+      <div id="controls" style={controlsContainerStyle}>
         <PreviewControl />
         <BrushPanel />
       </div>
