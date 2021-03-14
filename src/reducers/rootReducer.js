@@ -5,8 +5,8 @@ import canvasReducer from "./canvasReducer";
 // Base redux store state
 const initState = {
   // Canvas-related
-  height: 1,
-  width: 1,
+  width: 52,
+  height: 30,
   // Execution/preview-related
   playRate: 0.5,
   playMode: "play",

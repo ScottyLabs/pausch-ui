@@ -1,8 +1,9 @@
+import { useSelector } from "react-redux";
 import { Table, TableBody } from "semantic-ui-react"
 import IndicatorCell from "./IndicatorCell"
 
 const ProgressIndicator = (props) => {
-  const { height } = props
+  const height = useSelector((store) => store.height);
 
   const indicatorRows = []
   for (let i = 0; i < height; i++) {

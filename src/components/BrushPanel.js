@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { SketchPicker } from "react-color"
 import { shallowEqual, useDispatch, useSelector } from "react-redux"
 import reactCSS from "reactcss"
-import { Button, Grid, Icon, Segment } from "semantic-ui-react"
+import { Button, Grid, Icon, Popup, Segment } from "semantic-ui-react"
 import * as actions from "../actions"
 import { exportToPNG } from "./canvas-actions/exportCanvas"
 import CanvasImport from "./CanvasImport"
@@ -12,6 +12,7 @@ const ColorPicker = (props) => {
   const dispatch = useDispatch()
   const color = useSelector((store) => store.color, shallowEqual)
   const [showColorSelect, setShowColorSelect] = useState(false)
+  const [tmpColor, setTmpColor] = useState(color);
 
   const styles = reactCSS({
     default: {
@@ -55,9 +56,12 @@ const ColorPicker = (props) => {
         <div style={styles.popover}>
           <div style={styles.cover} onClick={() => setShowColorSelect(false)} />
           <SketchPicker
-            color={color}
-            onChange={(newColor) =>
-              dispatch(actions.brush.setColor(newColor.rgb))
+            color={tmpColor}
+            onChange={(newTmpColor) => {
+              setTmpColor(newTmpColor);
+            }}
+            onChangeComplete={() =>
+              dispatch(actions.brush.setColor(tmpColor.rgb))
             }
           />
         </div>
@@ -69,66 +73,127 @@ const ColorPicker = (props) => {
 const BrushPanel = (props) => {
   const dispatch = useDispatch()
   const drawMode = useSelector((store) => store.drawMode)
-  const width = useSelector((store) => store.width);
-  const height = useSelector((store) => store.height);
+  const width = useSelector((store) => store.width)
+  const height = useSelector((store) => store.height)
 
   return (
     <Segment>
-      <Grid style={{padding: "5px"}}>
+      <Grid style={{ padding: "5px" }}>
         <Grid.Row centered>
           <ColorPicker />
+          <Popup
+            content="Eyedropper"
+            mouseEnterDelay={250}
+            on="hover"
+            trigger={
+              <Button
+                icon
+                color={drawMode == "eyedropper" ? "green" : null}
+                style={{ marginLeft: "5px" }}
+                onClick={() =>
+                  dispatch(actions.brush.setDrawMode("eyedropper"))
+                }
+              >
+                <Icon name="eye dropper" />
+              </Button>
+            }
+          />
         </Grid.Row>
         <Grid.Row centered>
-          <Button
-            icon
-            color={drawMode == "paintbrush" ? "green" : null}
-            onClick={() => dispatch(actions.brush.setDrawMode("paintbrush"))}
-          >
-            <Icon name="paint brush" />
-          </Button>
-          <Button
-            icon
-            color={drawMode == "fill" ? "green" : null}
-            onClick={() => dispatch(actions.brush.setDrawMode("fill"))}
-          >
-            {/* Custom icon defined in App.css */}
-            <Icon className="paintbucket" />
-          </Button>
+          <Popup
+            content="Paintbrush"
+            mouseEnterDelay={250}
+            on="hover"
+            trigger={
+              <Button
+                icon
+                color={drawMode == "paintbrush" ? "green" : null}
+                onClick={() =>
+                  dispatch(actions.brush.setDrawMode("paintbrush"))
+                }
+              >
+                <Icon name="paint brush" />
+              </Button>
+            }
+          />
+          <Popup
+            content="Fill cells"
+            mouseEnterDelay={250}
+            on="hover"
+            trigger={
+              <Button
+                icon
+                color={drawMode == "fill" ? "green" : null}
+                onClick={() => dispatch(actions.brush.setDrawMode("fill"))}
+              >
+                {/* Custom icon defined in App.css */}
+                <Icon className="paintbucket" />
+              </Button>
+            }
+          />
         </Grid.Row>
         <Grid.Row centered>
-          <Button
-            icon
-            color={drawMode == "eraser" ? "green" : null}
-            onClick={() => dispatch(actions.brush.setDrawMode("eraser"))}
-          >
-            <Icon name="eraser" />
-          </Button>
-          <Button
-            icon
-            color={drawMode === "selection" ? "green" : null}
-            onClick={() => dispatch(actions.brush.setDrawMode("selection"))}
-          >
-            <Icon name="expand" />
-          </Button>
+          <Popup
+            content="Eraser"
+            mouseEnterDelay={250}
+            on="hover"
+            trigger={
+              <Button
+                icon
+                color={drawMode == "eraser" ? "green" : null}
+                onClick={() => dispatch(actions.brush.setDrawMode("eraser"))}
+              >
+                <Icon name="eraser" />
+              </Button>
+            }
+          />
+          <Popup
+            content="Select cells"
+            mouseEnterDelay={250}
+            on="hover"
+            trigger={
+              <Button
+                icon
+                color={drawMode === "selection" ? "green" : null}
+                onClick={() => dispatch(actions.brush.setDrawMode("selection"))}
+              >
+                <Icon name="expand" />
+              </Button>
+            }
+          />
         </Grid.Row>
         <Grid.Row centered>
-          <Button
-            icon
-            onClick={() => {
-              exportToPNG(width, height);
-            }}
-          >
-            <Icon name="save outline" />
-          </Button>
-          <Button
-            icon
-            onClick={() => {
-              clearCanvas()
-              dispatch(actions.preview.setPreviewValid(false))
-            }}
-          >
-            <Icon name="trash alternate outline" />
-          </Button>
+          <Popup
+            content="Save design to image"
+            mouseEnterDelay={250}
+            on="hover"
+            trigger={
+              <Button
+                icon
+                onClick={() => {
+                  exportToPNG(width, height)
+                }}
+              >
+                <Icon name="save outline" />
+              </Button>
+            }
+          />
+          <Popup
+            content="Clear canvas"
+            mouseEnterDelay={250}
+            on="hover"
+            trigger={
+              <Button
+                icon
+                onClick={() => {
+                  clearCanvas()
+                  dispatch(actions.preview.setPreviewValid(false))
+                }}
+              >
+                <Icon name="trash alternate outline" />
+              </Button>
+            }
+          />
         </Grid.Row>
         <Grid.Row centered>
           <CanvasImport />

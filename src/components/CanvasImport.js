@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useSelector } from "react-redux"
-import { Button, Input } from "semantic-ui-react"
+import { Button, Input, Popup } from "semantic-ui-react"
 import { importFromPNG } from "./canvas-actions/importCanvas"
 
 const canvasImportStyle = {
@@ -33,7 +33,12 @@ const CanvasImport = (props) => {
         name="canvas"
         onChange={(event) => setFile(event.target.files[0])}
       />
-      <Button onClick={fileUploaded}>Import</Button>
+      <Popup
+        content="Import an existing design"
+        mouseEnterDelay={250}
+        on="hover"
+        trigger={<Button onClick={fileUploaded}>Import</Button>}
+      />
     </div>
   )
 }
