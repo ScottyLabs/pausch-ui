@@ -4,6 +4,11 @@ import * as actions from "../actions"
 import { useSelector, useDispatch, shallowEqual } from "react-redux"
 
 // Styles
+const stickyStyle = {
+  position: "sticky",
+  top: 0
+}
+
 const tableStyle = {
   borderColor: "black",
 }
@@ -34,8 +39,8 @@ const startPlaying = async (previewCells, playMode, previewRow) => {
 }
 
 const Preview = (props) => {
-  const { width, height } = props
   const dispatch = useDispatch()
+  const width = useSelector((store) => store.width)
   const playMode = useSelector((store) => store.playMode)
   const playRate = useSelector((store) => store.playRate)
   const previewRow = useSelector((store) => store.previewRow)
@@ -71,11 +76,13 @@ const Preview = (props) => {
   }
 
   return (
-    <Table celled style={tableStyle}>
-      <TableBody>
-        <Table.Row key="0">{rowContent}</Table.Row>
-      </TableBody>
-    </Table>
+    <div style={stickyStyle}>
+      <Table celled style={tableStyle}>
+        <TableBody>
+          <Table.Row key="0">{rowContent}</Table.Row>
+        </TableBody>
+      </Table>
+    </div>
   )
 }
 

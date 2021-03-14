@@ -8,30 +8,28 @@ import * as actions from "./actions"
 import { useSelector, useDispatch } from "react-redux"
 import PreviewProgressIndicator from "./components/PreviewProgressIndicator"
 
-const CANVAS_WIDTH = 52
-const CANVAS_HEIGHT = 30
-
-const indicatorWidth = 100 / (CANVAS_WIDTH + 1)
-const contentWidth = (100 * CANVAS_WIDTH) / (CANVAS_WIDTH + 1)
-
 const appContainerStyle = {
   display: "grid",
   gridTemplateColumns: "95fr 5fr",
   padding: "3em",
 }
-
-const contentContainerStyle = {
-  display: "grid",
-  width: "100%",
-  columnGap: "10px",
-  gridTemplateColumns: `${indicatorWidth}fr ${contentWidth}fr`,
-}
-
 const controlsContainerStyle = { marginLeft: "2em", width: "15vw" }
 
 function App() {
   const dispatch = useDispatch()
   const [isMouseDown, setIsMouseDown] = useState(false)
+  const width = useSelector((store) => store.width)
+
+  const indicatorWidth = 100 / (width + 1)
+  const contentWidth = (100 * width) / (width + 1)
+
+  const contentContainerStyle = {
+    display: "grid",
+    width: "100%",
+    columnGap: "10px",
+    rowGap: "10px",
+    gridTemplateColumns: `${indicatorWidth}fr ${contentWidth}fr`,
+  }
 
   return (
     <div className="App" style={appContainerStyle}>
@@ -53,13 +51,9 @@ function App() {
         }}
       >
         <div />
-        <Preview width={CANVAS_WIDTH} height={CANVAS_HEIGHT} />
-        <PreviewProgressIndicator height={CANVAS_HEIGHT} />
-        <Canvas
-          width={CANVAS_WIDTH}
-          height={CANVAS_HEIGHT}
-          isMouseDown={isMouseDown}
-        />
+        <Preview />
+        <PreviewProgressIndicator />
+        <Canvas isMouseDown={isMouseDown} />
       </div>
       <div id="controls" style={controlsContainerStyle}>
         <PreviewControl />

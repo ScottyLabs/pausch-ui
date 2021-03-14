@@ -34,9 +34,12 @@ const PreviewControl = (props) => {
   const dispatch = useDispatch()
   const playMode = useSelector((store) => store.playMode)
   const playRate = useSelector((store) => store.playRate)
+  const height = useSelector((store) => store.height);
+  const width = useSelector((store) => store.width);
   // Keep this to subscribe to changes to previewRow for re-rendering
   const previewRow = useSelector((store) => store.previewRow)
   const [inputRate, setInputRate] = useState(playRate)
+  const [inputHeight, setInputHeight] = useState(height);
   const [renderTask, setRenderTask] = useState({
     time: 0,
     timer: null,
@@ -120,6 +123,40 @@ const PreviewControl = (props) => {
                 }}
               >
                 <Icon name="angle double right" />
+              </Button>
+            }
+          />
+        </Grid.Row>
+        <Grid.Row centered>
+          <Popup
+            content="Number of frames (height of canvas)"
+            delay={250}
+            on="hover"
+            trigger={
+              <Input
+                placeholder="Number of frames"
+                style={{
+                  width: "5em",
+                }}
+                value={inputHeight}
+                onChange={(event) => setInputHeight(event.target.value)}
+              />
+            }
+          />
+          <Popup
+            content="Save number of frames"
+            delay={250}
+            on="hover"
+            trigger={
+              <Button
+                icon
+                style={{ marginLeft: "1em" }}
+                onClick={() => {
+                  dispatch(actions.canvas.setDimensions(width, inputHeight))
+                  dispatch(actions.preview.resetPreview())
+                }}
+              >
+                <Icon name="list ul" />
               </Button>
             }
           />
