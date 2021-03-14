@@ -1,21 +1,29 @@
 import "semantic-ui-css/semantic.min.css"
 import Canvas from "./components/Canvas"
 import React, { useEffect, useState } from "react"
-import { Button, Grid } from "semantic-ui-react"
 import BrushPanel from "./components/BrushPanel"
 import Preview from "./components/Preview"
 import PreviewControl from "./components/PreviewControl"
+import * as actions from "./actions"
+import { useSelector, useDispatch } from "react-redux"
+import PreviewProgressIndicator from "./components/PreviewProgressIndicator"
+
+const CANVAS_WIDTH = 52
+const CANVAS_HEIGHT = 30
+
+const indicatorWidth = 100 / (CANVAS_WIDTH + 1)
+const contentWidth = (100 * CANVAS_WIDTH) / (CANVAS_WIDTH + 1)
+
+const contentContainerStyle = {
+  display: "grid",
+  width: "100%",
+  columnGap: "10px",
+  gridTemplateColumns: `${indicatorWidth}fr ${contentWidth}fr`,
+}
 
 function App() {
-  const [isMouseDown, setMouseDown] = useState(false)
-  const [drawMode, setDrawMode] = useState("paintbrush")
-  const [playMode, setPlayMode] = useState("play")
-  const [playRate, setPlayRate] = useState(0.5) // duration per frame in seconds
-  const [row, setRow] = useState(0)
-  const [color, setColor] = useState({ r: 255, g: 0, b: 0, a: 100 })
-
-  const width = 52
-  const height = 30
+  const dispatch = useDispatch()
+  const [isMouseDown, setIsMouseDown] = useState(false)
 
   return (
     <div
@@ -29,73 +37,27 @@ function App() {
     >
       <div
         id="content"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          flexGrow: 30,
-          alignItems: "flex-start",
-        }}
+        style={contentContainerStyle}
         onMouseDown={(event) => {
-          setMouseDown(true)
+          setIsMouseDown(true)
         }}
         onMouseUp={(event) => {
-          setMouseDown(false)
+          setIsMouseDown(false)
+          dispatch(actions.preview.setPreviewValid(false))
         }}
       >
-        <Preview
-          width={52}
-          height={30}
-          playMode={playMode}
-          setPlayMode={setPlayMode}
-          playRate={playRate}
-          row={row}
-          setRow={setRow}
-        ></Preview>
-        <div
-          style={{
-            width: "100%",
-            position: "relative",
-          }}
-        >
-          <div
-            id="progressBarContainer"
-            style={{
-              position: "absolute",
-              width: "103%",
-              marginLeft: "-1em",
-            }}
-          >
-            <hr
-              style={{
-                marginTop: 0,
-                border: "none",
-                height: "3px",
-              }}
-            />
-          </div>
-          <Canvas
-            width={width}
-            height={height}
-            isMouseDown={isMouseDown}
-            drawMode={drawMode}
-            color={color}
-          />
-        </div>
+        <div />
+        <Preview width={CANVAS_WIDTH} height={CANVAS_HEIGHT} />
+        <PreviewProgressIndicator height={CANVAS_HEIGHT} />
+        <Canvas
+          width={CANVAS_WIDTH}
+          height={CANVAS_HEIGHT}
+          isMouseDown={isMouseDown}
+        />
       </div>
       <div id="controls" style={{ marginLeft: "2em" }}>
-        <PreviewControl
-          playMode={playMode}
-          setPlayMode={setPlayMode}
-          playRate={playRate}
-          setPlayRate={setPlayRate}
-          setRow={setRow}
-        />
-        <BrushPanel
-          drawMode={drawMode}
-          setDrawMode={setDrawMode}
-          color={color}
-          setColor={setColor}
-        ></BrushPanel>
+        <PreviewControl />
+        <BrushPanel />
       </div>
     </div>
   )
