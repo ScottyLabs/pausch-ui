@@ -1,6 +1,5 @@
 import { Table } from "semantic-ui-react"
-import React, { useState } from "react"
-import * as actions from "../actions"
+import React from "react"
 import { useSelector, useDispatch, shallowEqual } from "react-redux"
 import bucketFill from "./brushes/bucketFill"
 import { finishSelection } from "./brushes/selection"
@@ -32,7 +31,6 @@ const CanvasCell = (props) => {
 
   // Mouse event listeners
   const onMouseUp = () => {
-    console.log("Start square", startSquare)
     const cell = document.querySelector("#cell" + index)
 
     cleanBoard(height, width)
