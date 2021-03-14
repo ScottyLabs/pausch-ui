@@ -45,7 +45,7 @@ const floodFill = (
 }
 
 // Perform the bucket fill brush
-const bucketFill = (cell, index, width, height, dstColor) => {
+export const bucketFill = (cell, index, width, height, dstColor) => {
   const cells = document.querySelectorAll(".canvasCell")
   const srcColor = cell.style.backgroundColor
   const [startRow, startCol] = toCoordinates(index, width)
@@ -59,5 +59,3 @@ const bucketFill = (cell, index, width, height, dstColor) => {
     dstColor
   )
 }
-
-export default bucketFill

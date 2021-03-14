@@ -12,6 +12,7 @@ const ColorPicker = (props) => {
   const dispatch = useDispatch()
   const color = useSelector((store) => store.color, shallowEqual)
   const [showColorSelect, setShowColorSelect] = useState(false)
+  const [tmpColor, setTmpColor] = useState(color);
 
   const styles = reactCSS({
     default: {
@@ -55,9 +56,12 @@ const ColorPicker = (props) => {
         <div style={styles.popover}>
           <div style={styles.cover} onClick={() => setShowColorSelect(false)} />
           <SketchPicker
-            color={color}
-            onChange={(newColor) =>
-              dispatch(actions.brush.setColor(newColor.rgb))
+            color={tmpColor}
+            onChange={(newTmpColor) => {
+              setTmpColor(newTmpColor);
+            }}
+            onChangeComplete={() =>
+              dispatch(actions.brush.setColor(tmpColor.rgb))
             }
           />
         </div>
@@ -77,6 +81,23 @@ const BrushPanel = (props) => {
       <Grid style={{ padding: "5px" }}>
         <Grid.Row centered>
           <ColorPicker />
+          <Popup
+            content="Eyedropper"
+            mouseEnterDelay={250}
+            on="hover"
+            trigger={
+              <Button
+                icon
+                color={drawMode == "eyedropper" ? "green" : null}
+                style={{ marginLeft: "5px" }}
+                onClick={() =>
+                  dispatch(actions.brush.setDrawMode("eyedropper"))
+                }
+              >
+                <Icon name="eye dropper" />
+              </Button>
+            }
+          />
         </Grid.Row>
         <Grid.Row centered>
           <Popup

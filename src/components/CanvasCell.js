@@ -1,8 +1,10 @@
 import { Table } from "semantic-ui-react"
 import React from "react"
 import { useSelector, useDispatch, shallowEqual } from "react-redux"
-import bucketFill from "./canvas-actions/bucketFill"
+import {bucketFill} from "./canvas-actions/bucketFill"
 import { startSelection, finishSelection } from "./canvas-actions/selection"
+import * as actions from "../actions"
+import { selectCellColor } from "./canvas-actions/eyeDropper"
 
 const tableCellStyle = {
   border: "solid white 3px",
@@ -49,8 +51,10 @@ const CanvasCell = (props) => {
         cell.style.backgroundColor = colorStr
       } else if (drawMode === "selection") {
         startSelection(index, width, enableSelect, dispatch)
-      } else {
+      } else if (drawMode === "eraser") {
         cell.style.backgroundColor = null
+      } else if (drawMode === "eyedropper") {
+        selectCellColor(cell, dispatch);
       }
     }
   }
@@ -67,7 +71,7 @@ const CanvasCell = (props) => {
       }}
       onMouseUp={(event) => {
         event.preventDefault()
-        onMouseUp();
+        onMouseUp()
       }}
       style={tableCellStyle}
       className={`canvasCell row${row.toString()}`}
