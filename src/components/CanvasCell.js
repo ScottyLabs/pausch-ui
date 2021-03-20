@@ -6,12 +6,12 @@ import { startSelection, finishSelection } from "./canvas-actions/selection"
 import * as actions from "../actions"
 import { selectCellColor } from "./canvas-actions/eyeDropper"
 
-const DEFAULT_COLOR = "rgba(255, 255, 255, 255)";
+const DEFAULT_COLOR = "rgba(0, 0, 0, 255)";
 
 const tableCellStyle = {
   backgroundColor: DEFAULT_COLOR,
-  border: "solid white 3px",
-  borderColor: "white",
+  border: `solid ${DEFAULT_COLOR} 3px`,
+  borderColor: DEFAULT_COLOR,
   width: "10px",
   height: "30px",
   padding: 0,

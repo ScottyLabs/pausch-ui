@@ -6,6 +6,11 @@ const brushReducer = (state, action) => {
       height: action.height,
       width: action.width
     }
+  } else if (action.type === "SET_DARK_MODE") {
+    return {
+      ...state,
+      isDarkMode: action.isDarkMode
+    }
   }
 }
 

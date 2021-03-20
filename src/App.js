@@ -1,4 +1,5 @@
 import "semantic-ui-css/semantic.min.css"
+import "./App.css"
 import Canvas from "./components/Canvas"
 import React, { useEffect, useState } from "react"
 import BrushPanel from "./components/BrushPanel"
@@ -7,12 +8,14 @@ import PreviewControl from "./components/PreviewControl"
 import * as actions from "./actions"
 import { useSelector, useDispatch } from "react-redux"
 import PreviewProgressIndicator from "./components/PreviewProgressIndicator"
+import SubmitPanel from "./components/SubmitPanel"
 
 const appContainerStyle = {
   display: "grid",
   gridTemplateColumns: "95fr 5fr",
   padding: "3em",
 }
+
 const controlsContainerStyle = { marginLeft: "2em", width: "15vw" }
 
 function App() {
@@ -57,6 +60,7 @@ function App() {
       </div>
       <div id="controls" style={controlsContainerStyle}>
         <PreviewControl />
+        <SubmitPanel />
         <BrushPanel />
       </div>
     </div>
