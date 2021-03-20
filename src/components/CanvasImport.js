@@ -23,7 +23,10 @@ const CanvasImport = (props) => {
           style={{ width: "100%" }}
           type="file"
           name="canvas"
-          onChange={(event) => importFile(event.target.files[0])}
+          onChange={(event) => {
+            importFile(event.target.files[0])
+            event.target.value = null;
+          }}
         />
       }
     />

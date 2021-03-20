@@ -6,7 +6,10 @@ import { startSelection, finishSelection } from "./canvas-actions/selection"
 import * as actions from "../actions"
 import { selectCellColor } from "./canvas-actions/eyeDropper"
 
+const DEFAULT_COLOR = "rgba(255, 255, 255, 255)";
+
 const tableCellStyle = {
+  backgroundColor: DEFAULT_COLOR,
   border: "solid white 3px",
   borderColor: "white",
   width: "10px",
@@ -52,7 +55,7 @@ const CanvasCell = (props) => {
       } else if (drawMode === "selection") {
         startSelection(index, width, enableSelect, dispatch)
       } else if (drawMode === "eraser") {
-        cell.style.backgroundColor = null
+        cell.style.backgroundColor = DEFAULT_COLOR
       } else if (drawMode === "eyedropper") {
         selectCellColor(cell, dispatch);
       }
