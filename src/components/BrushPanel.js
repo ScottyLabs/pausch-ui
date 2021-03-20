@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { SketchPicker } from "react-color"
 import { shallowEqual, useDispatch, useSelector } from "react-redux"
 import reactCSS from "reactcss"
-import { Button, Grid, Icon, Popup, Segment } from "semantic-ui-react"
+import { Button, Confirm, Grid, Icon, Popup, Segment } from "semantic-ui-react"
 import * as actions from "../actions"
 import { exportToPNG } from "./canvas-actions/exportCanvas"
 import CanvasImport from "./CanvasImport"
@@ -75,6 +75,8 @@ const BrushPanel = (props) => {
   const drawMode = useSelector((store) => store.drawMode)
   const width = useSelector((store) => store.width)
   const height = useSelector((store) => store.height)
+
+  const [showClearConfirm, setShowClearConfirm] = useState(false)
 
   return (
     <Segment>
@@ -186,13 +188,22 @@ const BrushPanel = (props) => {
               <Button
                 icon
                 onClick={() => {
-                  clearCanvas()
-                  dispatch(actions.preview.setPreviewValid(false))
+                  setShowClearConfirm(true)
                 }}
               >
                 <Icon name="trash alternate outline" />
               </Button>
             }
+          />
+          <Confirm
+            content="This will clear all content on the canvas. Are you sure?"
+            open={showClearConfirm}
+            onCancel={() => setShowClearConfirm(false)}
+            onConfirm={() => {
+              setShowClearConfirm(false)
+              clearCanvas()
+              dispatch(actions.preview.setPreviewValid(false))
+            }}
           />
         </Grid.Row>
         <Grid.Row centered>
