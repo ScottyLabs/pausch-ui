@@ -29,3 +29,19 @@ export const setStartSquare = (startSquare) => {
     startSquare
   }
 }
+
+export const setEndSquare = (endSquare) => {
+  return {
+    type: "SET_END_SQUARE",
+    category: "brush",
+    endSquare
+  }
+}
+
+export const setBuffer = (buffer) => {
+  return {
+    type: "SET_BUFFER",
+    category: "brush",
+    buffer
+  }
+}

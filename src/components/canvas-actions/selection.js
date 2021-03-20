@@ -34,5 +34,7 @@ export const finishSelection = (
     }
   }
 
-  dispatch(actions.brush.setStartSquare(null));
+  dispatch(actions.brush.setEndSquare(currSquare))
+
+  // dispatch(actions.brush.setStartSquare(null));
 }
