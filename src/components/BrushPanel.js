@@ -12,7 +12,7 @@ const ColorPicker = (props) => {
   const dispatch = useDispatch()
   const color = useSelector((store) => store.color, shallowEqual)
   const [showColorSelect, setShowColorSelect] = useState(false)
-  const [tmpColor, setTmpColor] = useState(color);
+  const [stateColor, setStateColor] = useState()
 
   const styles = reactCSS({
     default: {
@@ -56,13 +56,13 @@ const ColorPicker = (props) => {
         <div style={styles.popover}>
           <div style={styles.cover} onClick={() => setShowColorSelect(false)} />
           <SketchPicker
-            color={tmpColor}
-            onChange={(newTmpColor) => {
-              setTmpColor(newTmpColor);
+            color={stateColor}
+            onChange={(newColor) => {
+              setStateColor(newColor)
             }}
-            onChangeComplete={() =>
-              dispatch(actions.brush.setColor(tmpColor.rgb))
-            }
+            onChangeComplete={(newColor) => {
+              dispatch(actions.brush.setColor(newColor.rgb))
+            }}
           />
         </div>
       ) : null}
