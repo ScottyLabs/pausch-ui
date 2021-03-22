@@ -1,7 +1,32 @@
 body {
-  background-color: #212121;
+  background-color: #4f5b62;
 }
 
 .ui.table {
-  border: solid black 1px;
+  border: solid #4f5b62 1px;
+}
+
+.ui.segment {
+  background-color: #263238;
+}
+
+.icon.button {
+  background-color: #263238;
+}
+
+.indicator {
+  background-color: #263238;
+  border-color: #263238;
+}
+
+.labeled.button {
+  color: white;
+}
+
+i.icon:before {
+  color: white;
+}
+
+.icon.button:hover i.icon:before {
+  color: #263238;
 }

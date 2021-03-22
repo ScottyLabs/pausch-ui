@@ -12,9 +12,9 @@ const BrushPanel = (props) => {
   const drawMode = useSelector((store) => store.drawMode)
   const width = useSelector((store) => store.width)
   const height = useSelector((store) => store.height)
+  const backgroundColor = useSelector(store => store.backgroundColor)
 
   const [showClearConfirm, setShowClearConfirm] = useState(false)
-
 
   return (
     <Segment>
@@ -139,7 +139,7 @@ const BrushPanel = (props) => {
             onCancel={() => setShowClearConfirm(false)}
             onConfirm={() => {
               setShowClearConfirm(false)
-              clearCanvas()
+              clearCanvas(backgroundColor)
               dispatch(actions.preview.setPreviewValid(false))
             }}
           />

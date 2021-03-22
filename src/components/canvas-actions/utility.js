@@ -9,11 +9,11 @@ export const toIndex = (row, col, width) => {
   return index
 }
 
-export const clearCanvas = () => {
+export const clearCanvas = (DEFAULT_COLOR) => {
   const cells = document.querySelectorAll(".canvasCell")
   if (cells) {
     cells.forEach((cell) => {
-      cell.style.backgroundColor = null
+      cell.style.backgroundColor = DEFAULT_COLOR
     })
   }
 }

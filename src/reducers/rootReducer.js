@@ -4,7 +4,8 @@ import canvasReducer from "./canvasReducer";
 
 // Base redux store state
 const initState = {
-  darkMode: true,
+  backgroundColor: "rgba(0, 0, 0, 255)",
+  selectedColor: "rgba(255, 255, 255, 255)",
   // Canvas-related
   width: 57,
   height: 30,

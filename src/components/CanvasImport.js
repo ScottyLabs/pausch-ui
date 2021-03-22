@@ -9,6 +9,7 @@ const CanvasImport = (props) => {
 
   const importFile = (file) => {
     if (file != null) {
+      console.log("Imported", file)
       importFromPNG(file, width, height)
     }
   }

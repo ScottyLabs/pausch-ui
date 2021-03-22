@@ -37,11 +37,6 @@ const handlePlayMode = (
   }
 }
 
-const rowStyle = {
-  display: "flex",
-  paddingLeft: "1em"
-}
-
 // Controls for preview dynamics
 const PreviewControl = (props) => {
   const dispatch = useDispatch()
@@ -62,7 +57,7 @@ const PreviewControl = (props) => {
 
   return (
     <Segment>
-      <Grid relaxed columns={2}>
+      <Grid relaxed columns={2} style={{ paddingLeft: "1em" }}>
         <Grid.Row centered>
           <Popup
             content="Pause"
@@ -106,7 +101,7 @@ const PreviewControl = (props) => {
             }
           />
         </Grid.Row>
-        <Grid.Row style={rowStyle}>
+        <Grid.Row>
           <Popup
             content="Play rate in seconds per frame"
             delay={250}
@@ -129,7 +124,7 @@ const PreviewControl = (props) => {
             }
           />
         </Grid.Row>
-        <Grid.Row style={rowStyle}>
+        <Grid.Row>
           <Popup
             content="Number of frames (height of canvas)"
             delay={250}

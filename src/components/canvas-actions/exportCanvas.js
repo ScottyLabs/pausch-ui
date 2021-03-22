@@ -2,6 +2,7 @@ import Jimp from "jimp"
 
 const scaleFactor = 8
 
+// Export the canvas to a PNG buffer
 export const exportToPNGBuffer = (width, height) => {
   return new Promise(async (resolve, reject) => {
     const cells = document.querySelectorAll(".canvasCell")
@@ -36,6 +37,7 @@ export const exportToPNGBuffer = (width, height) => {
   })
 }
 
+// Export the canvas to a PNG and download it
 export const exportToPNG = async (width, height) => {
   const buffer = await exportToPNGBuffer(width, height)
   const url = window.URL.createObjectURL(new Blob([buffer]))
@@ -44,4 +46,11 @@ export const exportToPNG = async (width, height) => {
   link.setAttribute("download", "pausch-bridge.png")
   document.body.appendChild(link)
   link.click()
+}
+
+// Export the canvas to a PNG to a form-data serializable format
+export const exportToPNGNetwork = async (width, height) => {
+  const buffer = await exportToPNGBuffer(width, height);
+  const file = new File(buffer, "canvas.png");
+  return file;
 }

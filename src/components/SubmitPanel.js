@@ -1,32 +1,38 @@
+import axios from "axios"
+import FormData from "form-data"
 import React, { useState } from "react"
 import { useSelector } from "react-redux"
 import {
   Button,
   Confirm,
+  Dimmer,
   Grid,
   Icon,
   Input,
   Label,
+  Loader,
   Popup,
   Segment,
 } from "semantic-ui-react"
-import { exportToPNGBuffer } from "./canvas-actions/exportCanvas"
-import FormData from "form-data"
-import axios from "axios"
+import { exportToPNGNetwork } from "./canvas-actions/exportCanvas"
 
-const SUBMIT_URL = process.env.REACT_APP_BACKEND_URI + "/submit"
+const SUBMIT_URL = process.env.REACT_APP_BACKEND_URL + "/submissions/new"
 
 const submitDesign = async (width, height, title, author, playRate) => {
-  const buffer = exportToPNGBuffer(width, height)
+  const canvasData = await exportToPNGNetwork(width, height)
   const formData = new FormData()
-  formData.append("image", buffer)
+  formData.append("img", canvasData)
   formData.append("title", title)
   formData.append("author", author)
-  formData.append("playRate", playRate)
+  formData.append("email", "sample@email.com")
+  formData.append("frame_rate", playRate)
   axios({
     method: "post",
     url: SUBMIT_URL,
     data: formData,
+    headers: {
+      "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+    },
   })
 }
 
@@ -40,8 +46,8 @@ const SubmitPanel = (props) => {
 
   return (
     <Segment>
-      <Grid style={{ padding: "5px" }}>
-        <Grid.Row centered>
+      <Grid style={{ padding: "5px", paddingLeft: "1em" }}>
+        <Grid.Row>
           <Input
             value={inputTitle}
             onChange={(e) => setInputTitle(e.target.value)}
@@ -49,7 +55,7 @@ const SubmitPanel = (props) => {
             placeholder="Title of design"
           />
         </Grid.Row>
-        <Grid.Row centered>
+        <Grid.Row>
           <Input
             value={inputAuthor}
             onChange={(e) => setInputAuthor(e.target.value)}
@@ -82,7 +88,7 @@ const SubmitPanel = (props) => {
               setShowSubmitConfirm(false)
               submitDesign(width, height, inputTitle, inputAuthor, playRate)
             }}
-          />
+          ></Confirm>
         </Grid.Row>
       </Grid>
     </Segment>
