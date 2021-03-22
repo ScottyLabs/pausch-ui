@@ -15,7 +15,7 @@ const ProgressIndicator = (props) => {
   }
 
   return (
-    <Table celled style={{ marginTop: 0 }}>
+    <Table celled style={{ marginTop: 0 }} className="indicator">
       <TableBody>{indicatorRows}</TableBody>
     </Table>
   )
