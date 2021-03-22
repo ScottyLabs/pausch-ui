@@ -19,7 +19,9 @@ const initState = {
   isMouseDown: false,
   drawMode: "paintbrush",
   color: { r: 255, g: 0, b: 0, a: 100 },
-  startSquare: null
+  startSquare: null,
+  endSquare: null,
+  buffer: null
 };
 
 // Main reducer
