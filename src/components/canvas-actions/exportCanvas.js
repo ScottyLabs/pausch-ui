@@ -3,7 +3,7 @@ import Jimp from "jimp"
 const scaleFactor = 8
 
 // Export the canvas to a PNG buffer
-export const exportToPNGBuffer = (width, height) => {
+export const exportToPNGJimp = (width, height) => {
   return new Promise(async (resolve, reject) => {
     const cells = document.querySelectorAll(".canvasCell")
     try {
@@ -27,9 +27,7 @@ export const exportToPNGBuffer = (width, height) => {
         }
       }
 
-      // Create dummy url for downloading
-      const buffer = await image.getBufferAsync(Jimp.MIME_PNG)
-      resolve(buffer)
+      resolve(image)
     } catch (err) {
       console.error("Could not export canvas")
       reject(err)
@@ -39,7 +37,9 @@ export const exportToPNGBuffer = (width, height) => {
 
 // Export the canvas to a PNG and download it
 export const exportToPNG = async (width, height) => {
-  const buffer = await exportToPNGBuffer(width, height)
+  // Create dummy url for downloading
+  const image = await exportToPNGJimp(width, height);
+  const buffer = await image.getBufferAsync(Jimp.MIME_PNG)
   const url = window.URL.createObjectURL(new Blob([buffer]))
   const link = document.createElement("a")
   link.href = url
@@ -50,7 +50,7 @@ export const exportToPNG = async (width, height) => {
 
 // Export the canvas to a PNG to a form-data serializable format
 export const exportToPNGNetwork = async (width, height) => {
-  const buffer = await exportToPNGBuffer(width, height);
-  const file = new File(buffer, "canvas.png");
-  return file;
+  const image = await exportToPNGJimp(width, height);
+  const b64 = await image.getBase64Async(Jimp.MIME_PNG);
+  return b64.replace(/^data:image\/\w+;base64,/, "");
 }

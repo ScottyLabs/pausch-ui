@@ -1,16 +1,13 @@
 import axios from "axios"
-import FormData from "form-data"
 import React, { useState } from "react"
 import { useSelector } from "react-redux"
 import {
   Button,
   Confirm,
-  Dimmer,
   Grid,
   Icon,
   Input,
   Label,
-  Loader,
   Popup,
   Segment,
 } from "semantic-ui-react"
@@ -20,19 +17,10 @@ const SUBMIT_URL = process.env.REACT_APP_BACKEND_URL + "/submissions/new"
 
 const submitDesign = async (width, height, title, author, playRate) => {
   const canvasData = await exportToPNGNetwork(width, height)
-  const formData = new FormData()
-  formData.append("img", canvasData)
-  formData.append("title", title)
-  formData.append("author", author)
-  formData.append("email", "sample@email.com")
-  formData.append("frame_rate", playRate)
   axios({
     method: "post",
     url: SUBMIT_URL,
-    data: formData,
-    headers: {
-      "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
-    },
+    data: { img: canvasData, title, author, email: "sample@email.com", frame_rate: playRate},
   })
 }
 
