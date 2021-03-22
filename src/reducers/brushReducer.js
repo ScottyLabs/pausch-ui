@@ -20,6 +20,16 @@ const brushReducer = (state, action) => {
       ...state,
       startSquare: action.startSquare
     }
+  } else if (action.type === "SET_END_SQUARE") {
+    return {
+      ...state,
+      endSquare: action.endSquare
+    }
+  } else if (action.type === "SET_BUFFER") {
+    return {
+      ...state,
+      buffer: action.buffer
+    }
   }
 }
 

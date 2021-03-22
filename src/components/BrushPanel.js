@@ -7,6 +7,7 @@ import * as actions from "../actions"
 import { exportToPNG } from "./canvas-actions/exportCanvas"
 import CanvasImport from "./CanvasImport"
 import { clearCanvas } from "./canvas-actions/utility"
+import { copyCells, pasteCells } from "./canvas-actions/copyAndPaste"
 
 const ColorPicker = (props) => {
   const dispatch = useDispatch()
@@ -75,6 +76,9 @@ const BrushPanel = (props) => {
   const drawMode = useSelector((store) => store.drawMode)
   const width = useSelector((store) => store.width)
   const height = useSelector((store) => store.height)
+  const startSquare = useSelector((store) => store.startSquare)
+  const endSquare = useSelector((store) => store.endSquare)
+  const buffer = useSelector((store) => store.buffer)
 
   return (
     <Segment>
@@ -158,6 +162,32 @@ const BrushPanel = (props) => {
                 onClick={() => dispatch(actions.brush.setDrawMode("selection"))}
               >
                 <Icon name="expand" />
+              </Button>
+            }
+          />
+          <Popup
+            content="Copy cells"
+            mouseEnterDelay={250}
+            on="hover"
+            trigger={
+              <Button
+                icon
+                onClick={() => copyCells(width, startSquare, endSquare, dispatch)}
+              >
+                <Icon name="copy" />
+              </Button>
+            }
+          />
+          <Popup
+            content="Paste cells"
+            mouseEnterDelay={250}
+            on="hover"
+            trigger={
+              <Button
+                icon
+                onClick={() => pasteCells(width, height, startSquare, buffer)}
+              >
+                <Icon name="paste" />
               </Button>
             }
           />
