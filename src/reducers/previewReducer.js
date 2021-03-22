@@ -8,7 +8,8 @@ const previewReducer = (state, action) => {
   } else if (action.type === "SET_PLAYRATE") {
     return {
       ...state,
-      playRate: action.playRate
+      playRate: action.playRate,
+      playMode: "reset"
     }
   } else if (action.type === "SET_PREVIEW_VALID") {
     return {

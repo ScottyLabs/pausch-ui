@@ -8,6 +8,7 @@ const Canvas = (props) => {
   const { isMouseDown } = props
   const height = useSelector((store) => store.height);
   const width = useSelector((store) => store.width);
+  const backgroundColor = useSelector((store) => store.backgroundColor);
 
   const rows = []
   const cells = []
@@ -39,7 +40,7 @@ const Canvas = (props) => {
     )
   }
   return (
-    <Table celled style={{ marginTop: 0 }}>
+    <Table celled style={{ marginTop: 0, backgroundColor }}>
       <TableBody>{rows}</TableBody>
     </Table>
   )

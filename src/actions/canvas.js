@@ -6,3 +6,11 @@ export const setDimensions = (width, height) => {
     height,
   }
 }
+
+export const setDarkMode = (isDarkMode) => {
+  return {
+    type: "SET_DARK_MODE",
+    category: "canvas",
+    isDarkMode
+  }
+}

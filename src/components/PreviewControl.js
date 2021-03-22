@@ -1,4 +1,12 @@
-import { Button, Grid, Icon, Input, Popup, Segment } from "semantic-ui-react"
+import {
+  Button,
+  Grid,
+  Icon,
+  Input,
+  Popup,
+  Segment,
+  Label,
+} from "semantic-ui-react"
 import React, { useEffect, useState } from "react"
 import * as actions from "../actions"
 import { useSelector, useDispatch, connect } from "react-redux"
@@ -36,8 +44,8 @@ const PreviewControl = (props) => {
   const playRate = useSelector((store) => store.playRate)
   const height = useSelector((store) => store.height)
   const width = useSelector((store) => store.width)
-  // Keep this to subscribe to changes to previewRow for re-rendering
-  const previewRow = useSelector((store) => store.previewRow)
+  // Subscribe this component to changes to previewRow for re-rendering
+  useSelector((store) => store.previewRow)
   const [inputRate, setInputRate] = useState(playRate)
   const [inputHeight, setInputHeight] = useState(height)
   const [renderTask, setRenderTask] = useState({
@@ -49,7 +57,7 @@ const PreviewControl = (props) => {
 
   return (
     <Segment>
-      <Grid>
+      <Grid relaxed columns={2} style={{ paddingLeft: "1em" }}>
         <Grid.Row centered>
           <Popup
             content="Pause"
@@ -93,7 +101,7 @@ const PreviewControl = (props) => {
             }
           />
         </Grid.Row>
-        <Grid.Row centered>
+        <Grid.Row>
           <Popup
             content="Play rate in seconds per frame"
             delay={250}
@@ -101,6 +109,7 @@ const PreviewControl = (props) => {
             trigger={
               <Input
                 placeholder="Rate"
+                label={<Label content="Play rate" />}
                 style={{
                   width: "5em",
                 }}
@@ -109,31 +118,13 @@ const PreviewControl = (props) => {
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     dispatch(actions.preview.setPlayRate(inputRate))
-                    dispatch(actions.preview.setPlayMode("reset"))
                   }
                 }}
               />
             }
           />
-          <Popup
-            content="Save play rate"
-            delay={250}
-            on="hover"
-            trigger={
-              <Button
-                icon
-                style={{ marginLeft: "1em" }}
-                onClick={() => {
-                  dispatch(actions.preview.setPlayRate(inputRate))
-                  dispatch(actions.preview.setPlayMode("reset"))
-                }}
-              >
-                <Icon name="angle double right" />
-              </Button>
-            }
-          />
         </Grid.Row>
-        <Grid.Row centered>
+        <Grid.Row>
           <Popup
             content="Number of frames (height of canvas)"
             delay={250}
@@ -141,6 +132,7 @@ const PreviewControl = (props) => {
             trigger={
               <Input
                 placeholder="Number of frames"
+                label={<Label content="Canvas height" />}
                 style={{
                   width: "5em",
                 }}
@@ -153,23 +145,6 @@ const PreviewControl = (props) => {
                   }
                 }}
               />
-            }
-          />
-          <Popup
-            content="Save number of frames"
-            delay={250}
-            on="hover"
-            trigger={
-              <Button
-                icon
-                style={{ marginLeft: "1em" }}
-                onClick={() => {
-                  dispatch(actions.canvas.setDimensions(width, inputHeight))
-                  dispatch(actions.preview.resetPreview())
-                }}
-              >
-                <Icon name="list ul" />
-              </Button>
             }
           />
         </Grid.Row>

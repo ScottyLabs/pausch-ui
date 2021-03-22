@@ -4,8 +4,10 @@ import canvasReducer from "./canvasReducer";
 
 // Base redux store state
 const initState = {
+  backgroundColor: "rgba(0, 0, 0, 255)",
+  selectedColor: "rgba(255, 255, 255, 255)",
   // Canvas-related
-  width: 52,
+  width: 57,
   height: 30,
   // Execution/preview-related
   playRate: 0.5,

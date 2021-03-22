@@ -1,7 +1,5 @@
 import Jimp from "jimp"
-import { canvas } from "../../actions"
 import { clearCanvas } from "./utility"
-
 const scaleFactor = 8
 
 const readFile = (file) => {
