@@ -8,74 +8,12 @@ import CanvasImport from "./CanvasImport"
 import ColorPicker from "./ColorPicker"
 import { copyCells, pasteCells } from "./canvas-actions/copyAndPaste"
 
-const ColorPicker = (props) => {
-  const dispatch = useDispatch()
-  const color = useSelector((store) => store.color, shallowEqual)
-  const [showColorSelect, setShowColorSelect] = useState(false)
-  const [tmpColor, setTmpColor] = useState(color);
-
-  const styles = reactCSS({
-    default: {
-      color: {
-        width: "36px",
-        height: "14px",
-        borderRadius: "2px",
-        background: `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`,
-      },
-      swatch: {
-        padding: "5px",
-        background: "#fff",
-        borderRadius: "1px",
-        boxShadow: "0 0 0 1px rgba(0,0,0,.1)",
-        display: "inline-block",
-        cursor: "pointer",
-      },
-      popover: {
-        position: "absolute",
-        zIndex: "2",
-      },
-      cover: {
-        position: "fixed",
-        top: "0px",
-        right: "0px",
-        bottom: "0px",
-        left: "0px",
-      },
-    },
-  })
-
-  return (
-    <div>
-      <div
-        style={styles.swatch}
-        onClick={() => setShowColorSelect(!showColorSelect)}
-      >
-        <div style={styles.color} />
-      </div>
-      {showColorSelect ? (
-        <div style={styles.popover}>
-          <div style={styles.cover} onClick={() => setShowColorSelect(false)} />
-          <SketchPicker
-            color={tmpColor}
-            onChange={(newTmpColor) => {
-              setTmpColor(newTmpColor);
-            }}
-            onChangeComplete={() =>
-              dispatch(actions.brush.setColor(tmpColor.rgb))
-            }
-          />
-        </div>
-      ) : null}
-    </div>
-  )
-}
-
 const BrushPanel = (props) => {
   const dispatch = useDispatch()
   const drawMode = useSelector((store) => store.drawMode)
   const width = useSelector((store) => store.width)
   const height = useSelector((store) => store.height)
-  const backgroundColor = useSelector(store => store.backgroundColor)
+  const backgroundColor = useSelector((store) => store.backgroundColor)
 
   const [showClearConfirm, setShowClearConfirm] = useState(false)
   const startSquare = useSelector((store) => store.startSquare)
@@ -167,6 +105,8 @@ const BrushPanel = (props) => {
               </Button>
             }
           />
+        </Grid.Row>
+        <Grid.Row centered>
           <Popup
             content="Copy cells"
             mouseEnterDelay={250}
@@ -174,7 +114,9 @@ const BrushPanel = (props) => {
             trigger={
               <Button
                 icon
-                onClick={() => copyCells(width, startSquare, endSquare, dispatch)}
+                onClick={() =>
+                  copyCells(width, startSquare, endSquare, dispatch)
+                }
               >
                 <Icon name="copy" />
               </Button>
