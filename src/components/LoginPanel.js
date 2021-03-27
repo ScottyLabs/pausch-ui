@@ -1,12 +1,16 @@
 import React from "react";
 import LoginButton from "./LoginButton";
-import { Segment } from "semantic-ui-react";
+import { Button, Segment } from "semantic-ui-react";
 import { whoAmI } from "../utils/authUtils";
 import { useLocation } from "react-router-dom";
 
 const LoginPanel = ({ state, setState }) => {
   const location = useLocation();
   const user = whoAmI(location);
+
+  const startCollaboration = function(e) {
+    window.TogetherJS(this);
+  }
 
   return (
     <Segment>
@@ -16,6 +20,7 @@ const LoginPanel = ({ state, setState }) => {
           style={{ color: "white", marginTop: "1em" }}
         >{`${user.name} <${user.email}>`}</p>
       ) : null}
+      <Button onClick={startCollaboration}>Collaborate!</Button>
     </Segment>
   );
 };
