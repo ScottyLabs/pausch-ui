@@ -19,7 +19,7 @@ const Navbar = (props) => {
           }}
         >
           <Image
-            src={process.env.PUBLIC_URL + "/favicon.png"}
+            src={pauschBridge}
             style={{ width: "64px", height: "64px" }}
           />
           <h3 style={{ margin: 0, marginLeft: "1em" }}>Illuminate Designer</h3>
