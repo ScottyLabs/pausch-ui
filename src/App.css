@@ -14,7 +14,8 @@ body {
   background-color: #263238;
 }
 
-.indicator {
+.indicator,
+.table.indicator {
   background-color: #263238;
   border-color: #263238;
 }
@@ -29,4 +30,18 @@ i.icon:before {
 
 .icon.button:hover i.icon:before {
   color: #263238;
+}
+
+*,
+.ui.button,
+.ui.input > input {
+  font-family: "Roboto";
+}
+
+.canvasCell {
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
 }

@@ -9,8 +9,11 @@ import * as actions from "./actions"
 import { useSelector, useDispatch } from "react-redux"
 import PreviewProgressIndicator from "./components/PreviewProgressIndicator"
 import SubmitPanel from "./components/SubmitPanel"
+import Navbar from "./components/Navbar"
 
-const appContainerStyle = {
+const appContainerStyle = {}
+
+const mainBodyStyle = {
   display: "grid",
   gridTemplateColumns: "95fr 5fr",
   padding: "3em",
@@ -36,32 +39,37 @@ function App() {
 
   return (
     <div className="App" style={appContainerStyle}>
-      <div
-        id="content"
-        style={contentContainerStyle}
-        onMouseDown={(event) => {
-          setIsMouseDown(true)
-        }}
-        onMouseUp={(event) => {
-          setIsMouseDown(false)
-          dispatch(actions.preview.setPreviewValid(false))
-        }}
-        onTouchStart={(event) => {
-          setIsMouseDown(true)
-        }}
-        onTouchEnd={(event) => {
-          setIsMouseDown(false)
-        }}
-      >
-        <div />
-        <Preview />
-        <PreviewProgressIndicator />
-        <Canvas isMouseDown={isMouseDown} />
-      </div>
-      <div id="controls" style={controlsContainerStyle}>
-        <PreviewControl />
-        <SubmitPanel />
-        <BrushPanel />
+      <Navbar />
+      <div style={mainBodyStyle}>
+        <div
+          id="content"
+          style={contentContainerStyle}
+          onMouseDown={(event) => {
+            setIsMouseDown(true)
+          }}
+          onMouseUp={(event) => {
+            setIsMouseDown(false)
+            dispatch(actions.preview.setPreviewValid(false))
+          }}
+          onTouchStart={(event) => {
+            setIsMouseDown(true)
+            event.preventDefault()
+          }}
+          onTouchEnd={(event) => {
+            setIsMouseDown(false)
+            event.preventDefault()
+          }}
+        >
+          <div />
+          <Preview />
+          <PreviewProgressIndicator />
+          <Canvas isMouseDown={isMouseDown} />
+        </div>
+        <div id="controls" style={controlsContainerStyle}>
+          <PreviewControl />
+          <SubmitPanel />
+          <BrushPanel />
+        </div>
       </div>
     </div>
   )
