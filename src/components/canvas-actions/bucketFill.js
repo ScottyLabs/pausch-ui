@@ -21,7 +21,7 @@ const floodFill = (
   const queue = []
   queue.push([startRow, startCol])
   while (queue.length > 0) {
-    const [row, col] = queue.shift();
+    const [row, col] = queue.pop();
     for (let i = 0; i < 4; i++) {
       const newRow = row + dy[i]
       const newCol = col + dx[i]

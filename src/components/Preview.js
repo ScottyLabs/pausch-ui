@@ -15,6 +15,7 @@ const tableStyle = {
 
 const baseCellStyle = {
   borderColor: "black",
+  backgroundColor: "black",
   width: "10px",
   height: "80px",
   padding: 0,
