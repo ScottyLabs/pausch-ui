@@ -1,5 +1,6 @@
 import Jimp from "jimp"
 import { clearCanvas } from "./utility"
+import axios from "axios"
 
 const readFile = (file) => {
   return new Promise((resolve, reject) => {
@@ -15,29 +16,38 @@ const readFile = (file) => {
   })
 }
 
-export const importFromPNG = async (file, width, height) => {
+export const importFromRemote = async (url, width, height) => {
   try {
-    const dataUrl = await readFile(file)
-    const image = await Jimp.read(dataUrl)
+    const image = await Jimp.read(url)
 
-    image.resize(width, height);
+    image.resize(width, height)
 
     // Valid dimensions. Apply to canvas
-    clearCanvas();
-    const cells = document.querySelectorAll(".canvasCell");
+    clearCanvas()
+    const cells = document.querySelectorAll(".canvasCell")
     for (let i = 0; i < height; i++) {
       for (let j = 0; j < width; j++) {
-        const color = image.getPixelColor(j, i);
-        const { r, g, b, a } = Jimp.intToRGBA(color);
-        const colorStr = a == 0 ? "" : `rgb(${r}, ${g}, ${b})`;
+        const color = image.getPixelColor(j, i)
+        const { r, g, b, a } = Jimp.intToRGBA(color)
+        const colorStr = a == 0 ? "" : `rgb(${r}, ${g}, ${b})`
 
-        const index = i * width + j;
-        const cell = cells[index];
-        cell.style.backgroundColor = colorStr;
+        const index = i * width + j
+        const cell = cells[index]
+        cell.style.backgroundColor = colorStr
       }
     }
   } catch (err) {
-    console.error("Failed to load PNG into canvas")
+    console.error("Failed to load remote image into canvas")
+    throw err
+  }
+}
+
+export const importFromPNG = async (file, width, height) => {
+  try {
+    const dataUrl = await readFile(file)
+    importFromRemote(dataUrl, width, height)
+  } catch (err) {
+    console.error("Failed to load image into canvas")
     throw err
   }
 }
