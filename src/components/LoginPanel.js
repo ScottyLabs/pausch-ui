@@ -20,6 +20,7 @@ const LoginPanel = ({ state, setState }) => {
           style={{ color: "white", marginTop: "1em" }}
         >{`${user.name} <${user.email}>`}</p>
       ) : null}
+      <br />
       <Button onClick={startCollaboration}>Collaborate!</Button>
     </Segment>
   );

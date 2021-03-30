@@ -12,25 +12,32 @@ import {
   Segment,
 } from "semantic-ui-react"
 import { exportToPNGNetwork } from "./canvas-actions/exportCanvas"
+import { whoAmI } from "../utils/authUtils";
+import { useLocation } from "react-router-dom";
 
 const SUBMIT_URL = process.env.REACT_APP_BACKEND_URL + "/submissions/new"
 
-const submitDesign = async (width, height, title, author, playRate) => {
+const submitDesign = async (width, height, title, author, email, playRate) => {
   const canvasData = await exportToPNGNetwork(width, height)
   axios({
     method: "post",
     url: SUBMIT_URL,
-    data: { img: canvasData, title, author, email: "sample@email.com", frame_rate: playRate},
+    data: { img: canvasData, title, author, email, frame_rate: playRate},
   })
 }
 
 const SubmitPanel = (props) => {
+  const location = useLocation();
+  const user = whoAmI(location);
   const width = useSelector((store) => store.width)
   const height = useSelector((store) => store.height)
   const playRate = useSelector((store) => store.playRate)
+
   const [showSubmitConfirm, setShowSubmitConfirm] = useState(false)
+  const [showSignIn, setShowSignIn] = useState(false)
+
   const [inputTitle, setInputTitle] = useState("")
-  const [inputAuthor, setInputAuthor] = useState("")
+  const [inputAuthor, setInputAuthor] = useState(user ? user.name : "")
 
   return (
     <Segment>
@@ -74,7 +81,19 @@ const SubmitPanel = (props) => {
             onCancel={() => setShowSubmitConfirm(false)}
             onConfirm={() => {
               setShowSubmitConfirm(false)
-              submitDesign(width, height, inputTitle, inputAuthor, playRate)
+              if (!user) {
+                setShowSignIn(true)
+              } else {
+                submitDesign(width, height, inputTitle, inputAuthor, user.email, playRate)
+              }
+            }}
+          ></Confirm>
+          <Confirm
+            content="Please sign in first!"
+            open={showSignIn}
+            onCancel={() => setShowSignIn(false)}
+            onConfirm={() => {
+              setShowSignIn(false)
             }}
           ></Confirm>
         </Grid.Row>

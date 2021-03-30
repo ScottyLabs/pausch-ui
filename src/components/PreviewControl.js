@@ -19,20 +19,23 @@ const handlePlayMode = (
   dispatch
 ) => {
   if (playMode === "reset") {
-    dispatch(actions.preview.resetPreview())
-    if (renderTask.timer != null) {
-      clearTimeout(renderTask.timer)
-      setRenderTask({ time: 0 })
+    if (renderTask != null) {
+      clearTimeout(renderTask)
+      setRenderTask(null)
     }
+    dispatch(actions.preview.resetPreview())
   } else if (playMode === "play") {
-    const now = Date.now()
     const delay = playRate * 1000
-    if (now - renderTask.time >= delay) {
-      // Check time to prevent race conditions
-      const timer = setTimeout(() => {
+    if (renderTask == null) {
+      const timer = setInterval(() => {
         dispatch(actions.preview.incrementPreviewRow())
-      }, delay)
-      setRenderTask({ timer, time: now })
+      }, delay);
+      setRenderTask(timer)
+    }
+  } else if (playMode === "pause") {
+    if (renderTask != null) {
+      clearTimeout(renderTask)
+      setRenderTask(null);
     }
   }
 }
@@ -48,10 +51,7 @@ const PreviewControl = (props) => {
   useSelector((store) => store.previewRow)
   const [inputRate, setInputRate] = useState(playRate)
   const [inputHeight, setInputHeight] = useState(height)
-  const [renderTask, setRenderTask] = useState({
-    time: 0,
-    timer: null,
-  })
+  const [renderTask, setRenderTask] = useState(null)
 
   handlePlayMode(playMode, playRate, renderTask, setRenderTask, dispatch)
 
