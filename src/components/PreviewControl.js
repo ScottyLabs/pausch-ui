@@ -140,7 +140,7 @@ const PreviewControl = (props) => {
                 onChange={(event) => setInputHeight(event.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
-                    dispatch(actions.canvas.setDimensions(width, inputHeight))
+                    dispatch(actions.canvas.setDimensions(width, parseInt(inputHeight)))
                     dispatch(actions.preview.resetPreview())
                   }
                 }}
