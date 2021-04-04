@@ -5,12 +5,13 @@ import { bucketFill } from "./canvas-actions/bucketFill"
 import { startSelection, finishSelection } from "./canvas-actions/selection"
 import * as actions from "../actions"
 import { selectCellColor } from "./canvas-actions/eyeDropper"
-import { drawLine } from "./canvas-actions/line"
+import { drawLine, drawDashedLine } from "./canvas-actions/line"
 import { toCoordinates } from "./canvas-actions/utility"
 
 const DEFAULT_COLOR = "rgba(0, 0, 0, 255)"
 // default selection border color
-const SELECTED_COLOR = "#21ba45"
+const START_SELECTED_COLOR = "rgb(105, 240, 175)"
+const END_SELECTED_COLOR = "rgb(105, 240, 174)"
 // Draw Modes where we want to show an indicator of the current cell selection
 const INDICATOR_MODES = ["selection", "line", "dashed-line"]
 
@@ -48,8 +49,10 @@ const CanvasCell = (props) => {
 
   const onMouseLeave = () => {
     const cell = document.querySelector("#cell" + index)
-    if (drawMode === "selection") {
-      cell.style.borderColor = backgroundColor
+    if (INDICATOR_MODES.includes(drawMode)) {
+      if (cell.style.borderColor == END_SELECTED_COLOR) {
+        cell.style.borderColor = backgroundColor
+      }
     }
   }
 
@@ -65,17 +68,22 @@ const CanvasCell = (props) => {
     } else if (drawMode === "line") {
       const endSquare = toCoordinates(index, width)
       drawLine(width, startSquare, endSquare, colorStr)
+    } else if (drawMode === "dashed-line") {
+      const endSquare = toCoordinates(index, width)
+      drawDashedLine(width, startSquare, endSquare, colorStr)
     }
 
-    if (INDICATOR_MODES.includes(drawMode)) {
-      cell.style.borderColor = backgroundColor
-    }
   }
 
   // When a mouse hovers over a cell
   const onMouseOver = (startNewSelection, forceMouseDown) => {
     if (isMouseDown || forceMouseDown) {
       const cell = document.querySelector("#cell" + index)
+      
+      if (INDICATOR_MODES.includes(drawMode)) {
+        startSelection(index, width, startNewSelection, dispatch)
+        cell.style.borderColor = startNewSelection ? START_SELECTED_COLOR : END_SELECTED_COLOR;
+      }
       // Handle brushes
       if (drawMode === "paintbrush") {
         cell.style.backgroundColor = colorStr
@@ -86,13 +94,8 @@ const CanvasCell = (props) => {
       } else if (drawMode === "eyedropper") {
         selectCellColor(cell, dispatch)
       } else if (drawMode === "line") {
-        startSelection(index, width, startNewSelection, dispatch)
       } else if (drawMode === "dashed-line") {
       } else if (drawMode === "diamond") {
-      }
-
-      if (INDICATOR_MODES.includes(drawMode)) {
-        cell.style.borderColor = SELECTED_COLOR
       }
     }
   }

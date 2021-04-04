@@ -14,6 +14,7 @@ export const clearCanvas = (DEFAULT_COLOR) => {
   if (cells) {
     cells.forEach((cell) => {
       cell.style.backgroundColor = DEFAULT_COLOR
+      cell.style.borderColor = DEFAULT_COLOR
     })
   }
 }
