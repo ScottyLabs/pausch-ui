@@ -4,13 +4,13 @@ import { Button, Grid, Icon, Input, Label, Popup } from "semantic-ui-react"
 import { importFromPNG, importFromRemote } from "./canvas-actions/importCanvas"
 
 const upperRowStyle = { 
-  minWidth: "100%"
+  minWidth: "100%",
+  display: "grid",
+  gridTemplateColumns: "80fr 20fr"
  }
 const lowerRowStyle = { 
   minWidth: "100%", 
   marginTop: "1em",
-  display: "grid",
-  gridTemplateColumns: "80fr 20fr"
  }
 
 const CanvasImport = (props) => {
@@ -31,7 +31,24 @@ const CanvasImport = (props) => {
 
   return (
     <>
-      <div style={upperRowStyle}>
+    <div style={upperRowStyle}>
+        <Popup
+          content="Import an existing design from a remote image file (PNG/JPEG)"
+          mouseEnterDelay={250}
+          on="hover"
+          trigger={
+            <Input
+              value={inputURL}
+              onChange={(e) => setInputURL(e.target.value)}
+              placeholder="https://i.imgur.com/D1YZkML.png"
+            />
+          }
+        />
+        <Button icon style={{zIndex: 1}} onClick={importRemote}>
+          <Icon name="download" />
+        </Button>
+      </div>
+      <div style={lowerRowStyle}>
         <Popup
           content="Import an existing design from an image file (PNG/JPEG)"
           mouseEnterDelay={250}
@@ -48,23 +65,6 @@ const CanvasImport = (props) => {
             />
           }
         />
-      </div>
-      <div style={lowerRowStyle}>
-        <Popup
-          content="Import an existing design from a remote image file (PNG/JPEG)"
-          mouseEnterDelay={250}
-          on="hover"
-          trigger={
-            <Input
-              value={inputURL}
-              onChange={(e) => setInputURL(e.target.value)}
-              placeholder="https://i.imgur.com/D1YZkML.png"
-            />
-          }
-        />
-        <Button icon style={{zIndex: 1}} onClick={importRemote}>
-          <Icon name="download" />
-        </Button>
       </div>
     </>
   )

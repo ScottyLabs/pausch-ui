@@ -17,7 +17,7 @@ code {
   src: url("./assets/fontello.woff") format("woff");
 }
 
-i.icon.paintbucket {
+i.icon.custom {
   font-family: "Fontello";
   font-size: 1em;
   font-weight: bolder;
@@ -25,4 +25,16 @@ i.icon.paintbucket {
 
 i.icon.paintbucket:before {
   content: "\e800";
+}
+
+i.icon.straight-line:before {
+  content: "\e801";
+}
+
+i.icon.dashed-line:before {
+  content: "\e802";
+}
+
+i.icon.diamondshape:before {
+  content: "\e803";
 }

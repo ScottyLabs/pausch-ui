@@ -35,7 +35,6 @@ const Navbar = (props) => {
           </Menu.Item>
           <Menu.Item
             name="Gallery"
-            active={activeItem === "gallery"}
             onClick={() => setActiveItem("gallery")}
           >
             <Icon name="file image outline" />

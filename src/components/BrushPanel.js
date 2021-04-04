@@ -71,12 +71,10 @@ const BrushPanel = (props) => {
                 onClick={() => dispatch(actions.brush.setDrawMode("fill"))}
               >
                 {/* Custom icon defined in App.css */}
-                <Icon className="paintbucket" />
+                <Icon className="custom paintbucket" />
               </Button>
             }
           />
-        </Grid.Row>
-        <Grid.Row centered>
           <Popup
             content="Eraser"
             mouseEnterDelay={250}
@@ -91,6 +89,54 @@ const BrushPanel = (props) => {
               </Button>
             }
           />
+        </Grid.Row>
+        <Grid.Row centered>
+          <Popup
+            content="Line"
+            mouseEnterDelay={250}
+            on="hover"
+            trigger={
+              <Button
+                icon
+                color={drawMode == "line" ? "green" : null}
+                onClick={() =>
+                  dispatch(actions.brush.setDrawMode("line"))
+                }
+              >
+                <Icon className="custom straight-line" />
+              </Button>
+            }
+          />
+          <Popup
+            content="Dashed line"
+            mouseEnterDelay={250}
+            on="hover"
+            trigger={
+              <Button
+                icon
+                color={drawMode == "dashed-line" ? "green" : null}
+                onClick={() => dispatch(actions.brush.setDrawMode("dashed-line"))}
+              >
+                <Icon className="custom dashed-line" />
+              </Button>
+            }
+          />
+          <Popup
+            content="Diamond"
+            mouseEnterDelay={250}
+            on="hover"
+            trigger={
+              <Button
+                icon
+                color={drawMode == "diamond" ? "green" : null}
+                onClick={() => dispatch(actions.brush.setDrawMode("diamond"))}
+              >
+                <Icon className="custom diamondshape" />
+              </Button>
+            }
+          />
+        </Grid.Row>
+        <Grid.Row centered>
           <Popup
             content="Select cells"
             mouseEnterDelay={250}
@@ -105,8 +151,6 @@ const BrushPanel = (props) => {
               </Button>
             }
           />
-        </Grid.Row>
-        <Grid.Row centered>
           <Popup
             content="Copy cells"
             mouseEnterDelay={250}

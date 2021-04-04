@@ -1,6 +1,8 @@
 import { toCoordinates, toIndex } from "./utility"
 import * as actions from "../../actions";
 
+const BORDER_COLOR = "#21ba45";
+
 // Start new selection bounds
 export const startSelection = (index, width, enableSelect, dispatch) => {
   if (enableSelect) {
@@ -29,12 +31,10 @@ export const finishSelection = (
   for (let i = minRow; i <= maxRow; i++) {
     for (let j = minCol; j <= maxCol; j++) {
       const cell = document.querySelector("#cell" + toIndex(i, j, width))
-        cell.style.borderColor = "blue"
+        cell.style.borderColor = BORDER_COLOR;
         cell.style.borderWidth = "3px"
     }
   }
 
   dispatch(actions.brush.setEndSquare(currSquare))
-
-  // dispatch(actions.brush.setStartSquare(null));
 }

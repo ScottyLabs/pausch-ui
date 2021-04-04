@@ -54,7 +54,7 @@ const ColorPicker = (props) => {
           <SketchPicker
             color={stateColor}
             onChange={(newColor) => {
-              setStateColor(newColor)
+              setStateColor(newColor.rgb)
             }}
             onChangeComplete={(newColor) => {
               dispatch(actions.brush.setColor(newColor.rgb))
