@@ -9,6 +9,10 @@ export const toIndex = (row, col, width) => {
   return index
 }
 
+export const isPositionGood = (row, col, height, width) => {
+  return 0 <= row && row < height && 0 <= col && col < width;
+}
+
 export const clearCanvas = (DEFAULT_COLOR) => {
   const cells = document.querySelectorAll(".canvasCell")
   if (cells) {

@@ -7,6 +7,7 @@ import * as actions from "../actions"
 import { selectCellColor } from "./canvas-actions/eyeDropper"
 import { drawLine, drawDashedLine } from "./canvas-actions/line"
 import { toCoordinates } from "./canvas-actions/utility"
+import { drawDiamond } from "./canvas-actions/diamond"
 
 const DEFAULT_COLOR = "rgba(0, 0, 0, 255)"
 // default selection border color
@@ -96,6 +97,8 @@ const CanvasCell = (props) => {
       } else if (drawMode === "line") {
       } else if (drawMode === "dashed-line") {
       } else if (drawMode === "diamond") {
+        const [_, col] = toCoordinates(index, width);
+        drawDiamond(width, height, row, col, colorStr);
       }
     }
   }
