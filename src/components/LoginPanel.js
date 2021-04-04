@@ -8,10 +8,6 @@ const LoginPanel = ({ state, setState }) => {
   const location = useLocation();
   const user = whoAmI(location);
 
-  const startCollaboration = function(e) {
-    window.TogetherJS(this);
-  }
-
   return (
     <Segment>
       <LoginButton state={state} setState={setState} />
@@ -21,7 +17,6 @@ const LoginPanel = ({ state, setState }) => {
         >{`${user.name} <${user.email}>`}</p>
       ) : null}
       <br />
-      <Button onClick={startCollaboration}>Collaborate!</Button>
     </Segment>
   );
 };
