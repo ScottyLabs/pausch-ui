@@ -30,6 +30,14 @@ export const setStartSquare = (startSquare) => {
   }
 }
 
+export const setCurrentSquare = (currentSquare) => {
+  return {
+    type: "SET_CURRENT_SQUARE",
+    category: "brush",
+    currentSquare
+  }
+}
+
 export const setEndSquare = (endSquare) => {
   return {
     type: "SET_END_SQUARE",

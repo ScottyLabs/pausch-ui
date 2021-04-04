@@ -5,8 +5,14 @@ import { bucketFill } from "./canvas-actions/bucketFill"
 import { startSelection, finishSelection } from "./canvas-actions/selection"
 import * as actions from "../actions"
 import { selectCellColor } from "./canvas-actions/eyeDropper"
+import { drawLine } from "./canvas-actions/line"
+import { toCoordinates } from "./canvas-actions/utility"
 
 const DEFAULT_COLOR = "rgba(0, 0, 0, 255)"
+// default selection border color
+const SELECTED_COLOR = "#21ba45"
+// Draw Modes where we want to show an indicator of the current cell selection
+const INDICATOR_MODES = ["selection", "line", "dashed-line"]
 
 const getTableCellStyle = (backgroundColor) => {
   return {
@@ -33,11 +39,19 @@ const CanvasCell = (props) => {
   const drawMode = useSelector((store) => store.drawMode)
   const color = useSelector((store) => store.color, shallowEqual)
   const startSquare = useSelector((store) => store.startSquare)
+
   const backgroundColor =
     useSelector((store) => store.backgroundColor) || DEFAULT_COLOR
   const tableCellStyle = getTableCellStyle(backgroundColor)
 
   const colorStr = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`
+
+  const onMouseLeave = () => {
+    const cell = document.querySelector("#cell" + index)
+    if (drawMode === "selection") {
+      cell.style.borderColor = backgroundColor
+    }
+  }
 
   // Mouse event listeners
   const onMouseUp = () => {
@@ -48,22 +62,37 @@ const CanvasCell = (props) => {
       finishSelection(index, height, width, startSquare, dispatch)
     } else if (drawMode === "fill") {
       bucketFill(cell, index, width, height, colorStr)
+    } else if (drawMode === "line") {
+      const endSquare = toCoordinates(index, width)
+      drawLine(width, startSquare, endSquare, colorStr)
+    }
+
+    if (INDICATOR_MODES.includes(drawMode)) {
+      cell.style.borderColor = backgroundColor
     }
   }
 
   // When a mouse hovers over a cell
-  const onMouseOver = (enableSelect, forceMouseDown) => {
+  const onMouseOver = (startNewSelection, forceMouseDown) => {
     if (isMouseDown || forceMouseDown) {
       const cell = document.querySelector("#cell" + index)
       // Handle brushes
       if (drawMode === "paintbrush") {
         cell.style.backgroundColor = colorStr
       } else if (drawMode === "selection") {
-        startSelection(index, width, enableSelect, dispatch)
+        startSelection(index, width, startNewSelection, dispatch)
       } else if (drawMode === "eraser") {
         cell.style.backgroundColor = backgroundColor
       } else if (drawMode === "eyedropper") {
         selectCellColor(cell, dispatch)
+      } else if (drawMode === "line") {
+        startSelection(index, width, startNewSelection, dispatch)
+      } else if (drawMode === "dashed-line") {
+      } else if (drawMode === "diamond") {
+      }
+
+      if (INDICATOR_MODES.includes(drawMode)) {
+        cell.style.borderColor = SELECTED_COLOR
       }
     }
   }
@@ -72,7 +101,7 @@ const CanvasCell = (props) => {
     <Table.Cell
       onMouseEnter={(event) => {
         event.preventDefault()
-        onMouseOver(false)
+        onMouseOver(false, false)
       }}
       onMouseDown={(event) => {
         event.preventDefault()
@@ -81,6 +110,10 @@ const CanvasCell = (props) => {
       onMouseUp={(event) => {
         event.preventDefault()
         onMouseUp()
+      }}
+      onMouseLeave={(event) => {
+        event.preventDefault()
+        onMouseLeave()
       }}
       style={tableCellStyle}
       className={`canvasCell row${row.toString()}`}

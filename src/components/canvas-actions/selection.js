@@ -4,9 +4,9 @@ import * as actions from "../../actions";
 const BORDER_COLOR = "#21ba45";
 
 // Start new selection bounds
-export const startSelection = (index, width, enableSelect, dispatch) => {
-  if (enableSelect) {
-    const coords = toCoordinates(index, width)
+export const startSelection = (index, width, startNewSelection, dispatch) => {
+  const coords = toCoordinates(index, width)
+  if (startNewSelection) {
     dispatch(actions.brush.setStartSquare(coords))
   }
 }
