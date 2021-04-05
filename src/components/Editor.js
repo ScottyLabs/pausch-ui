@@ -47,6 +47,7 @@ const Editor = () => {
     columnGap: "10px",
     rowGap: "10px",
     gridTemplateColumns: `${indicatorWidth}fr ${contentWidth}fr`,
+    gridTemplateRows: `10fr 90fr`
   }
 
   return (
