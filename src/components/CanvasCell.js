@@ -9,22 +9,21 @@ import { drawLine, drawDashedLine } from "./canvas-actions/line"
 import { toCoordinates } from "./canvas-actions/utility"
 import { drawDiamond } from "./canvas-actions/diamond"
 
-const DEFAULT_COLOR = "rgba(0, 0, 0, 255)"
+const DEFAULT_BORDER_COLOR = "rgba(0, 0, 0, 255"
+const DEFAULT_COLOR = "rgba(0, 0, 0, 0)"
 // default selection border color
 const START_SELECTED_COLOR = "rgb(105, 240, 175)"
 const END_SELECTED_COLOR = "rgb(105, 240, 174)"
 // Draw Modes where we want to show an indicator of the current cell selection
 const INDICATOR_MODES = ["selection", "line", "dashed-line"]
 
-const getTableCellStyle = (backgroundColor) => {
-  return {
-    backgroundColor,
-    border: `solid ${backgroundColor} 3px`,
-    borderColor: backgroundColor,
+const tableCellStyle = {
+    backgroundColor: DEFAULT_COLOR,
+    border: `solid ${DEFAULT_BORDER_COLOR} 3px`,
+    borderColor: DEFAULT_BORDER_COLOR,
     width: "10px",
     height: "30px",
     padding: 0,
-  }
 }
 
 const cleanBoard = (tableCellStyle, height, width) => {
@@ -44,18 +43,13 @@ const CanvasCell = (props) => {
   const diamondRadius = useSelector(store => store.diamondRadius)
   const dashedLineGap = useSelector(store => store.dashedLineGap)
   const dashedLineSolid = useSelector(store => store.dashedLineSolid)
-
-  const backgroundColor =
-    useSelector((store) => store.backgroundColor) || DEFAULT_COLOR
-  const tableCellStyle = getTableCellStyle(backgroundColor)
-
   const colorStr = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`
 
   const onMouseLeave = () => {
     const cell = document.querySelector("#cell" + index)
     if (INDICATOR_MODES.includes(drawMode)) {
       if (cell.style.borderColor == END_SELECTED_COLOR) {
-        cell.style.borderColor = backgroundColor
+        cell.style.borderColor = DEFAULT_BORDER_COLOR
       }
     }
   }
@@ -95,7 +89,7 @@ const CanvasCell = (props) => {
       } else if (drawMode === "selection") {
         startSelection(index, width, startNewSelection, dispatch)
       } else if (drawMode === "eraser") {
-        cell.style.backgroundColor = backgroundColor
+        cell.style.backgroundColor = DEFAULT_COLOR
       } else if (drawMode === "eyedropper") {
         selectCellColor(cell, dispatch)
       } else if (drawMode === "line") {

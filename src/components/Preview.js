@@ -13,6 +13,10 @@ const tableStyle = {
   borderColor: "black",
 }
 
+const previewRowStyle = {
+  backgroundColor: "rgba(0, 0, 0, 255)"
+}
+
 const baseCellStyle = {
   borderColor: "black",
   backgroundColor: "black",
@@ -80,7 +84,7 @@ const Preview = (props) => {
     <div style={stickyStyle}>
       <Table celled style={tableStyle}>
         <TableBody>
-          <Table.Row key="0">{rowContent}</Table.Row>
+          <Table.Row key="0" style={previewRowStyle}>{rowContent}</Table.Row>
         </TableBody>
       </Table>
     </div>
