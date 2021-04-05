@@ -13,12 +13,12 @@ export const isPositionGood = (row, col, height, width) => {
   return 0 <= row && row < height && 0 <= col && col < width;
 }
 
-export const clearCanvas = (DEFAULT_COLOR) => {
+export const clearCanvas = (backgroundColor, borderColor) => {
   const cells = document.querySelectorAll(".canvasCell")
   if (cells) {
     cells.forEach((cell) => {
-      cell.style.backgroundColor = DEFAULT_COLOR
-      cell.style.borderColor = DEFAULT_COLOR
+      cell.style.backgroundColor = backgroundColor
+      cell.style.borderColor = borderColor
     })
   }
 }

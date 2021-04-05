@@ -8,12 +8,14 @@ import CanvasImport from "./CanvasImport"
 import ColorPicker from "./ColorPicker"
 import { copyCells, pasteCells } from "./canvas-actions/copyAndPaste"
 
+const BACKGROUND_COLOR = "rgba(0, 0, 0, 0)";
+const BORDER_COLOR = "rgba(0, 0, 0, 255)";
+
 const BrushPanel = (props) => {
   const dispatch = useDispatch()
   const drawMode = useSelector((store) => store.drawMode)
   const width = useSelector((store) => store.width)
   const height = useSelector((store) => store.height)
-  const backgroundColor = useSelector((store) => store.backgroundColor)
 
   const [showClearConfirm, setShowClearConfirm] = useState(false)
   const startSquare = useSelector((store) => store.startSquare)
@@ -217,7 +219,7 @@ const BrushPanel = (props) => {
             onCancel={() => setShowClearConfirm(false)}
             onConfirm={() => {
               setShowClearConfirm(false)
-              clearCanvas(backgroundColor)
+              clearCanvas(BACKGROUND_COLOR, BORDER_COLOR)
               dispatch(actions.preview.setPreviewValid(false))
             }}
           />
