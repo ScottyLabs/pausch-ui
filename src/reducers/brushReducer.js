@@ -35,6 +35,21 @@ const brushReducer = (state, action) => {
       ...state,
       buffer: action.buffer
     }
+  } else if (action.type === "SET_DASHED_LINE_GAP") {
+    return {
+      ...state,
+      dashedLineGap: action.gap
+    }
+  } else if (action.type === "SET_DASHED_LINE_SOLID") {
+    return {
+      ...state,
+      dashedLineSolid: action.solid
+    }
+  } else if (action.type === "SET_DIAMOND_RADIUS") {
+    return {
+      ...state,
+      diamondRadius: action.radius
+    }
   }
 }
 

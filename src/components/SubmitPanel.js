@@ -34,7 +34,8 @@ const SubmitPanel = (props) => {
   const playRate = useSelector((store) => store.playRate)
 
   const [showSubmitConfirm, setShowSubmitConfirm] = useState(false)
-  const [showSignIn, setShowSignIn] = useState(false)
+  const [alertMessage, setAlertMessage] = useState(false)
+  const [showAlert, setShowAlert] = useState(false)
 
   const [inputTitle, setInputTitle] = useState("")
   const [inputAuthor, setInputAuthor] = useState(user ? user.name : "")
@@ -82,18 +83,25 @@ const SubmitPanel = (props) => {
             onConfirm={() => {
               setShowSubmitConfirm(false)
               if (!user) {
-                setShowSignIn(true)
+                setAlertMessage("Please sign in first!")
+                setShowAlert(true)
+              } else if (inputTitle.trim() === "") {
+                setAlertMessage("Please do not leave the title blank!")
+                setShowAlert(true)
+              } else if (inputAuthor.trim() === "") {
+                setAlertMessage("Please do leave the author field blank!")
+                setShowAlert(true)
               } else {
                 submitDesign(width, height, inputTitle, inputAuthor, user.email, playRate)
               }
             }}
           ></Confirm>
           <Confirm
-            content="Please sign in first!"
-            open={showSignIn}
-            onCancel={() => setShowSignIn(false)}
+            content={alertMessage}
+            open={showAlert}
+            onCancel={() => setShowAlert(false)}
             onConfirm={() => {
-              setShowSignIn(false)
+              setShowAlert(false)
             }}
           ></Confirm>
         </Grid.Row>

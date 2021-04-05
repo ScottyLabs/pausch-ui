@@ -1,10 +1,8 @@
 import { toIndex, isPositionGood } from "./utility"
 
-const DIAMOND_SIZE = 5;
-
-export const drawDiamond = (width, height, row, col, color) => {
-  const startCol = col - DIAMOND_SIZE;
-  const endCol = col + DIAMOND_SIZE;
+export const drawDiamond = (width, height, row, col, color, radius) => {
+  const startCol = col - radius;
+  const endCol = col + radius;
   let increment = 1;
   let lineOffset = 0;
   for (let x = startCol; x <= endCol; x++) {

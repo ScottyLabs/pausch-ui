@@ -41,6 +41,9 @@ const CanvasCell = (props) => {
   const drawMode = useSelector((store) => store.drawMode)
   const color = useSelector((store) => store.color, shallowEqual)
   const startSquare = useSelector((store) => store.startSquare)
+  const diamondRadius = useSelector(store => store.diamondRadius)
+  const dashedLineGap = useSelector(store => store.dashedLineGap)
+  const dashedLineSolid = useSelector(store => store.dashedLineSolid)
 
   const backgroundColor =
     useSelector((store) => store.backgroundColor) || DEFAULT_COLOR
@@ -71,7 +74,8 @@ const CanvasCell = (props) => {
       drawLine(width, startSquare, endSquare, colorStr)
     } else if (drawMode === "dashed-line") {
       const endSquare = toCoordinates(index, width)
-      drawDashedLine(width, startSquare, endSquare, colorStr)
+      drawDashedLine(width, startSquare, endSquare, colorStr, 
+        dashedLineGap, dashedLineSolid)
     }
 
   }
@@ -98,7 +102,7 @@ const CanvasCell = (props) => {
       } else if (drawMode === "dashed-line") {
       } else if (drawMode === "diamond") {
         const [_, col] = toCoordinates(index, width);
-        drawDiamond(width, height, row, col, colorStr);
+        drawDiamond(width, height, row, col, colorStr, diamondRadius);
       }
     }
   }

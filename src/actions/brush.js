@@ -53,3 +53,27 @@ export const setBuffer = (buffer) => {
     buffer
   }
 }
+
+export const setDashedLineGap = (gap) => {
+  return {
+    type: "SET_DASHED_LINE_GAP",
+    category: "brush",
+    gap
+  }
+}
+
+export const setDashedLineSolid = (solid) => {
+  return {
+    type: "SET_DASHED_LINE_SOLID",
+    category: "brush",
+    solid
+  }
+}
+
+export const setDiamondRadius = (radius) => {
+  return {
+    type: "SET_DIAMOND_RADIUS",
+    category: "brush",
+    radius
+  }
+}

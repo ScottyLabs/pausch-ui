@@ -3,8 +3,6 @@ import { toIndex } from "./utility"
 const SOLID = "solid";
 const DASHED = "dashed";
 
-const DASH_LENGTH = 2;
-
 const plot = (x, y, width, color) => {
   const cell = document.querySelector(`#cell${toIndex(y, x, width)}`)
   cell.style.backgroundColor = color;
@@ -14,7 +12,7 @@ const plot = (x, y, width, color) => {
  * Compute Bresenham's Line algorithm for small gradients
  * @see https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
  */
-const plotLineLow = (x0, y0, x1, y1, width, color, mode) => {
+const plotLineLow = (x0, y0, x1, y1, width, color, mode, dashedLineGap, dashedLineSolid) => {
   const dx = x1 - x0;
   let dy = y1 - y0;
 
@@ -33,7 +31,8 @@ const plotLineLow = (x0, y0, x1, y1, width, color, mode) => {
       if (solid) {
         plot(x, y, width, color);
       }
-      if (++dashIdx == DASH_LENGTH) {
+      const limit = solid ? dashedLineSolid : dashedLineGap
+      if (++dashIdx == limit) {
         dashIdx = 0;
         solid = !solid;
       }
@@ -53,7 +52,7 @@ const plotLineLow = (x0, y0, x1, y1, width, color, mode) => {
  * Compute Bresenham's Line algorithm for steep gradients
  * @see https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
  */
-const plotLineHigh = (x0, y0, x1, y1, width, color, mode) => {
+const plotLineHigh = (x0, y0, x1, y1, width, color, mode, dashedLineGap, dashedLineSolid) => {
   let dx = x1 - x0;
   const dy = y1 - y0;
   const signX = Math.sign(dx);
@@ -70,7 +69,8 @@ const plotLineHigh = (x0, y0, x1, y1, width, color, mode) => {
       if (solid) {
         plot(x, y, width, color);
       }
-      if (++dashIdx == DASH_LENGTH) {
+      const limit = solid ? dashedLineSolid : dashedLineGap
+      if (++dashIdx == limit) {
         dashIdx = 0;
         solid = !solid;
       }
@@ -89,18 +89,18 @@ const plotLineHigh = (x0, y0, x1, y1, width, color, mode) => {
 /**
  * General purpose plot line plot algorithm
  */
-const plotLine = (x0, y0, x1, y1, width, color, mode) => {
+const plotLine = (x0, y0, x1, y1, width, color, mode, dashedLineGap, dashedLineSolid) => {
   if (Math.abs(y1 - y0) < Math.abs(x1 - x0)) {
     if (x0 > x1) {
-      plotLineLow(x1, y1, x0, y0, width, color, mode);
+      plotLineLow(x1, y1, x0, y0, width, color, mode, dashedLineGap, dashedLineSolid);
     } else {
-      plotLineLow(x0, y0, x1, y1, width, color, mode);
+      plotLineLow(x0, y0, x1, y1, width, color, mode, dashedLineGap, dashedLineSolid);
     }
   } else {
     if (y0 > y1) {
-      plotLineHigh(x1, y1, x0, y0, width, color, mode);
+      plotLineHigh(x1, y1, x0, y0, width, color, mode, dashedLineGap, dashedLineSolid);
     } else {
-      plotLineHigh(x0, y0, x1, y1, width, color, mode);
+      plotLineHigh(x0, y0, x1, y1, width, color, mode, dashedLineGap, dashedLineSolid);
     }
   }
 }
@@ -109,12 +109,12 @@ export const drawLine = (width, startSquare, endSquare, color) => {
   let [startRow, startCol] = startSquare
   let [endRow, endCol] = endSquare
 
-  plotLine(startCol, startRow, endCol, endRow, width, color, SOLID);
+  plotLine(startCol, startRow, endCol, endRow, width, color, SOLID, 0, 0);
 }
 
-export const drawDashedLine = (width, startSquare, endSquare, color) => {
+export const drawDashedLine = (width, startSquare, endSquare, color, dashedLineGap, dashedLineSolid) => {
   let [startRow, startCol] = startSquare
   let [endRow, endCol] = endSquare
 
-  plotLine(startCol, startRow, endCol, endRow, width, color, DASHED);
+  plotLine(startCol, startRow, endCol, endRow, width, color, DASHED, dashedLineGap, dashedLineSolid);
 }

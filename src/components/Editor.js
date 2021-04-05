@@ -7,6 +7,7 @@ import * as actions from "../actions"
 import { useSelector, useDispatch } from "react-redux"
 import PreviewProgressIndicator from "./PreviewProgressIndicator"
 import SubmitPanel from "./SubmitPanel"
+import OptionPanel from "./OptionPanel"
 import LoginPanel from "./LoginPanel"
 import { checkAccessToken } from "../utils/authUtils"
 import { useLocation, useHistory } from "react-router-dom"
@@ -80,6 +81,7 @@ const Editor = () => {
           />
           <PreviewControl />
           <SubmitPanel />
+          <OptionPanel />
           <BrushPanel />
         </div>
       </div>

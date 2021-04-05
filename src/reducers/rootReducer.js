@@ -22,7 +22,10 @@ const initState = {
   startSquare: null,
   currentSquare: null,
   endSquare: null,
-  buffer: null
+  buffer: null,
+  dashedLineGap: 2,
+  dashedLineSolid: 2,
+  diamondRadius: 5
 };
 
 // Main reducer
