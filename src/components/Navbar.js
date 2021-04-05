@@ -32,10 +32,10 @@ const Navbar = (props) => {
             Canvas
           </Menu.Item>
           <Menu.Item name="Gallery">
-            <Link to={process.env.REACT_APP_GALLERY_LINK} target="_blank">
+            <a href={process.env.REACT_APP_GALLERY_LINK} target="_blank">
               <Icon name="file image outline" />
               Gallery
-            </Link>
+            </a>
           </Menu.Item>
         </Menu.Menu>
       </Menu>
