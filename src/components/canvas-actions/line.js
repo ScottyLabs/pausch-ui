@@ -105,7 +105,21 @@ const plotLine = (x0, y0, x1, y1, width, color, mode, dashedLineGap, dashedLineS
   }
 }
 
+const arrayEquals = (a, b) => {
+  if (a == b) return true;
+  if (a.length != b.length) return false
+  
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] != b[i]) return false;
+  }
+  return true;
+}
+
 export const drawLine = (width, startSquare, endSquare, color) => {
+  if (startSquare == null || endSquare == null || arrayEquals(startSquare, endSquare)) {
+    return
+  }
+
   let [startRow, startCol] = startSquare
   let [endRow, endCol] = endSquare
 
@@ -113,6 +127,10 @@ export const drawLine = (width, startSquare, endSquare, color) => {
 }
 
 export const drawDashedLine = (width, startSquare, endSquare, color, dashedLineGap, dashedLineSolid) => {
+  if (startSquare == null || endSquare == null || arrayEquals(startSquare, endSquare)) {
+    return
+  }
+  console.log(startSquare, endSquare)
   let [startRow, startCol] = startSquare
   let [endRow, endCol] = endSquare
 
