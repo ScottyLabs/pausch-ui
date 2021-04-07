@@ -1,6 +1,6 @@
 # Illuminate Designer
 
-Illuminate Designer is a tool to create lighting sequences for the Randy Pausch Bridge. Thsi is the official tool that we used for Illuminate 2021.
+Illuminate Designer is a tool to create lighting sequences for the Randy Pausch Bridge. This is the official tool that we used for Illuminate 2021.
 
 ## Configuration
 To setup the environment, run the following command:
