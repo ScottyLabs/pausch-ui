@@ -7,9 +7,9 @@ import {
   Segment,
   Label,
 } from "semantic-ui-react"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import * as actions from "../actions"
-import { useSelector, useDispatch, connect } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 
 const handlePlayMode = (
   playMode,

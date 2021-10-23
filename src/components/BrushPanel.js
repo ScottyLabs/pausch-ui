@@ -34,7 +34,7 @@ const BrushPanel = (props) => {
             trigger={
               <Button
                 icon
-                color={drawMode == "eyedropper" ? "green" : null}
+                color={drawMode === "eyedropper" ? "green" : null}
                 style={{ marginLeft: "5px" }}
                 onClick={() =>
                   dispatch(actions.brush.setDrawMode("eyedropper"))
@@ -53,7 +53,7 @@ const BrushPanel = (props) => {
             trigger={
               <Button
                 icon
-                color={drawMode == "paintbrush" ? "green" : null}
+                color={drawMode === "paintbrush" ? "green" : null}
                 onClick={() =>
                   dispatch(actions.brush.setDrawMode("paintbrush"))
                 }
@@ -69,7 +69,7 @@ const BrushPanel = (props) => {
             trigger={
               <Button
                 icon
-                color={drawMode == "fill" ? "green" : null}
+                color={drawMode === "fill" ? "green" : null}
                 onClick={() => dispatch(actions.brush.setDrawMode("fill"))}
               >
                 {/* Custom icon defined in App.css */}
@@ -84,7 +84,7 @@ const BrushPanel = (props) => {
             trigger={
               <Button
                 icon
-                color={drawMode == "eraser" ? "green" : null}
+                color={drawMode === "eraser" ? "green" : null}
                 onClick={() => dispatch(actions.brush.setDrawMode("eraser"))}
               >
                 <Icon name="eraser" />
@@ -100,7 +100,7 @@ const BrushPanel = (props) => {
             trigger={
               <Button
                 icon
-                color={drawMode == "line" ? "green" : null}
+                color={drawMode === "line" ? "green" : null}
                 onClick={() =>
                   dispatch(actions.brush.setDrawMode("line"))
                 }
@@ -116,7 +116,7 @@ const BrushPanel = (props) => {
             trigger={
               <Button
                 icon
-                color={drawMode == "dashed-line" ? "green" : null}
+                color={drawMode === "dashed-line" ? "green" : null}
                 onClick={() => dispatch(actions.brush.setDrawMode("dashed-line"))}
               >
                 <Icon className="custom dashed-line" />
@@ -130,7 +130,7 @@ const BrushPanel = (props) => {
             trigger={
               <Button
                 icon
-                color={drawMode == "diamond" ? "green" : null}
+                color={drawMode === "diamond" ? "green" : null}
                 onClick={() => dispatch(actions.brush.setDrawMode("diamond"))}
               >
                 <Icon className="custom diamondshape" />

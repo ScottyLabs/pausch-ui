@@ -36,7 +36,7 @@ const IndicatorCell = (props) => {
   return (
     <Table.Cell
       className="indicator"
-      style={previewRow == row ? selectedCellStyle : cellStyle}
+      style={previewRow === row ? selectedCellStyle : cellStyle}
     ></Table.Cell>
   )
 }

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useSelector } from "react-redux"
-import { Button, Grid, Icon, Input, Label, Popup } from "semantic-ui-react"
+import { Button, Icon, Input, Popup } from "semantic-ui-react"
 import { importFromPNG, importFromRemote } from "./canvas-actions/importCanvas"
 
 const upperRowStyle = { 

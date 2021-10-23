@@ -1,7 +1,6 @@
 import { Segment, Menu, Icon, Image } from "semantic-ui-react"
 import { useState } from "react"
 import pauschBridge from "../assets/pausch-bridge.png"
-import { Link } from "react-router-dom"
 
 const Navbar = (props) => {
   const [activeItem, setActiveItem] = useState("canvas")
@@ -32,7 +31,7 @@ const Navbar = (props) => {
             Canvas
           </Menu.Item>
           <Menu.Item name="Gallery">
-            <a href={process.env.REACT_APP_GALLERY_LINK} target="_blank">
+            <a href={process.env.REACT_APP_GALLERY_LINK} target="_blank" rel="noreferrer">
               <Icon name="file image outline" />
               Gallery
             </a>

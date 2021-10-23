@@ -1,6 +1,5 @@
 import Jimp from "jimp"
 import { clearCanvas } from "./utility"
-import axios from "axios"
 
 const readFile = (file) => {
   return new Promise((resolve, reject) => {
@@ -29,7 +28,7 @@ export const importFromRemote = async (url, width, height) => {
       for (let j = 0; j < width; j++) {
         const color = image.getPixelColor(j, i)
         const { r, g, b, a } = Jimp.intToRGBA(color)
-        const colorStr = a == 0 ? "" : `rgb(${r}, ${g}, ${b})`
+        const colorStr = a === 0 ? "" : `rgb(${r}, ${g}, ${b})`
 
         const index = i * width + j
         const cell = cells[index]

@@ -1,7 +1,6 @@
 import React from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { Table, TableBody } from "semantic-ui-react"
-import * as actions from "../actions"
 import CanvasCell from "./CanvasCell"
 
 const Canvas = (props) => {

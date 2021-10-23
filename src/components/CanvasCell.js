@@ -3,7 +3,6 @@ import React from "react"
 import { useSelector, useDispatch, shallowEqual } from "react-redux"
 import { bucketFill } from "./canvas-actions/bucketFill"
 import { startSelection, finishSelection } from "./canvas-actions/selection"
-import * as actions from "../actions"
 import { selectCellColor } from "./canvas-actions/eyeDropper"
 import { drawLine, drawDashedLine } from "./canvas-actions/line"
 import { toCoordinates } from "./canvas-actions/utility"
@@ -48,7 +47,7 @@ const CanvasCell = (props) => {
   const onMouseLeave = () => {
     const cell = document.querySelector("#cell" + index)
     if (INDICATOR_MODES.includes(drawMode)) {
-      if (cell.style.borderColor == END_SELECTED_COLOR) {
+      if (cell.style.borderColor === END_SELECTED_COLOR) {
         cell.style.borderColor = DEFAULT_BORDER_COLOR
       }
     }
@@ -95,7 +94,7 @@ const CanvasCell = (props) => {
       } else if (drawMode === "line") {
       } else if (drawMode === "dashed-line") {
       } else if (drawMode === "diamond") {
-        const [_, col] = toCoordinates(index, width);
+        const [ , col] = toCoordinates(index, width);
         drawDiamond(width, height, row, col, colorStr, diamondRadius);
       }
     }

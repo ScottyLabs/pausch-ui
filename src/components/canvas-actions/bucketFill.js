@@ -32,7 +32,7 @@ const floodFill = (
           visited[newRow][newCol] = true;
           const cell = cells[newRow * width + newCol]
           // Check if matching starting color
-          if (cell.style.backgroundColor == srcColor) {
+          if (cell.style.backgroundColor === srcColor) {
             // Apply fill with new color
             cell.style.backgroundColor = dstColor
             // Recurse

@@ -27,12 +27,12 @@ const plotLineLow = (x0, y0, x1, y1, width, color, mode, dashedLineGap, dashedLi
   let solid = true;
 
   for (let x = x0; x * signX <= x1 * signX; x += signX) {
-    if (mode == DASHED) {
+    if (mode === DASHED) {
       if (solid) {
         plot(x, y, width, color);
       }
       const limit = solid ? dashedLineSolid : dashedLineGap
-      if (++dashIdx == limit) {
+      if (++dashIdx === limit) {
         dashIdx = 0;
         solid = !solid;
       }
@@ -65,12 +65,12 @@ const plotLineHigh = (x0, y0, x1, y1, width, color, mode, dashedLineGap, dashedL
   let dashIdx = 0;
   let solid = true;
   for (let y = y0; y * signY <= y1 * signY; y += signY) {
-    if (mode == DASHED) {
+    if (mode === DASHED) {
       if (solid) {
         plot(x, y, width, color);
       }
       const limit = solid ? dashedLineSolid : dashedLineGap
-      if (++dashIdx == limit) {
+      if (++dashIdx === limit) {
         dashIdx = 0;
         solid = !solid;
       }
@@ -106,11 +106,11 @@ const plotLine = (x0, y0, x1, y1, width, color, mode, dashedLineGap, dashedLineS
 }
 
 const arrayEquals = (a, b) => {
-  if (a == b) return true;
-  if (a.length != b.length) return false
+  if (a === b) return true;
+  if (a.length !== b.length) return false
   
   for (let i = 0; i < a.length; i++) {
-    if (a[i] != b[i]) return false;
+    if (a[i] !== b[i]) return false;
   }
   return true;
 }

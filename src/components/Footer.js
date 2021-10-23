@@ -1,12 +1,4 @@
-import {
-  Button,
-  Confirm,
-  Grid,
-  Icon,
-  Label,
-  Popup,
-  Segment,
-} from "semantic-ui-react"
+import { Segment } from "semantic-ui-react"
 
 const footerStyle = {
   position: "absolute",
@@ -25,7 +17,7 @@ const Footer = (props) => {
       <Segment style={footerStyle}>
         <p style={footerTextStyle}>
           Developed with ❤️ by 
-          <a href="https://scottylabs.org/" target="_blank"> ScottyLabs</a>
+          <a href="https://scottylabs.org/" target="_blank" rel="noreferrer"> ScottyLabs</a>
         </p>
       </Segment>
     </div>
