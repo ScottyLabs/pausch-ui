@@ -6,6 +6,8 @@ export const copyCells = (width, startSquare, endSquare, dispatch) => {
     let square = startSquare ? [...startSquare] : null
     let currSquare = endSquare ? [...endSquare] : null
 
+    if (square == null || currSquare == null) return;
+
     const minRow = Math.min(square[0], currSquare[0])
     const maxRow = Math.max(square[0], currSquare[0])
     const minCol = Math.min(square[1], currSquare[1])
