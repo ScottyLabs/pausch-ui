@@ -10,7 +10,8 @@ const stickyStyle = {
 }
 
 const tableStyle = {
-  borderColor: "black",
+  borderColor: "white",
+  borderWidth: "2px",
 }
 
 const previewRowStyle = {
