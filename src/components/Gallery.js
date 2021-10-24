@@ -1,4 +1,6 @@
 import React, { useState } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import ImageGrid from "./ImageGrid"
 import LoginPanel from "./LoginPanel"
 import { checkAccessToken } from "../utils/authUtils"
 import { useLocation, useHistory } from "react-router-dom"
@@ -29,6 +31,9 @@ const Gallery = () => {
   return (
     <>
       <div className="App" style={appContainerStyle}>
+        <div id="content">
+          <ImageGrid />
+        </div>
         <div id="controls" style={controlsContainerStyle}>
           <LoginPanel
             state={{ loggedIn: loggedIn, loading: loading }}
