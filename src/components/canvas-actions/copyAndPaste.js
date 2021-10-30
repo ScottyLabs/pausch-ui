@@ -1,4 +1,4 @@
-import { toCoordinates, toIndex } from "./utility";
+import { toIndex } from "./utility";
 import * as actions from "../../actions";
 
 export const copyCells = (width, startSquare, endSquare, dispatch) => {

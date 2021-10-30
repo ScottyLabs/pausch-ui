@@ -1,9 +1,7 @@
 import React from "react";
 import { Button } from "semantic-ui-react";
-import { useHistory } from "react-router-dom";
 
 const LoginButton = (props) => {
-  const history = useHistory();
   const logout = () => {
     window.localStorage.removeItem("accessToken");
     props.setState.setLoading(true);

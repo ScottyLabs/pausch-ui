@@ -14,7 +14,7 @@ export const drawDiamond = (width, height, row, col, color, radius) => {
           cell.style.backgroundColor = color;
       }
     }
-    if (x == col) {
+    if (x === col) {
       increment *= -1;
     }
     lineOffset += increment;
