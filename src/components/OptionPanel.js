@@ -14,6 +14,7 @@ const DashedLineOptions = () => {
 
   const [inputGap, setInputGap] = useState(dashedLineGap)
   const [inputSolid, setInputSolid] = useState(dashedLineSolid)
+
   return (
     <Grid style={{ padding: "5px", paddingLeft: "1em" }}>
       <Grid.Row>
@@ -24,11 +25,14 @@ const DashedLineOptions = () => {
           trigger={
             <Input
               value={inputGap}
-              onChange={(e) => setInputGap(e.target.value)}
+              onChange={(e) => {
+                setInputGap(e.target.value)
+              }}
               label={<Label content="Dashed line gap" />}
-              placeholder="5"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
+              placeholder="2"
+              type="number"
+              onKeyUp={(e) => {
+                if (inputGap !== "") {
                   const gap = parseInt(inputGap)
                   dispatch(actions.brush.setDashedLineGap(gap))
                 }
@@ -48,9 +52,10 @@ const DashedLineOptions = () => {
               value={inputSolid}
               onChange={(e) => setInputSolid(e.target.value)}
               label={<Label content="Dashed line solid length" />}
-              placeholder="5"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
+              placeholder="2"
+              type="number"
+              onKeyUp={(e) => {
+                if (inputSolid !== "") {
                   const solid = parseInt(inputSolid)
                   dispatch(actions.brush.setDashedLineSolid(solid))
                 }
@@ -81,8 +86,9 @@ const DiamondOptions = () => {
               onChange={(e) => setInputRadius(e.target.value)}
               label={<Label content="Diamond radius" />}
               placeholder="5"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
+              type = "number"
+              onKeyUp={(e) => {
+                if (inputRadius !== "") {
                   const radius = parseInt(inputRadius)
                   dispatch(actions.brush.setDiamondRadius(radius))
                 }
