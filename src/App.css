@@ -32,6 +32,12 @@ i.icon:before {
   color: #263238;
 }
 
+
+.ui.button:focus {
+  background-color: transparent;
+}
+
+
 .canvasCell {
   user-select: none;
   -moz-user-select: none;
