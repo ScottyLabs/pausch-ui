@@ -92,6 +92,8 @@ const CanvasCell = (props) => {
         cell.style.backgroundColor = DEFAULT_COLOR
       } else if (drawMode === "eyedropper") {
         selectCellColor(cell, dispatch)
+        // Switch back to paintbrush automatically
+        dispatch(actions.brush.setDrawMode("paintbrush"))
       } else if (drawMode === "line") {
       } else if (drawMode === "dashed-line") {
       } else if (drawMode === "diamond") {
