@@ -7,6 +7,7 @@ import { selectCellColor } from "./canvas-actions/eyeDropper"
 import { drawLine, drawDashedLine } from "./canvas-actions/line"
 import { toCoordinates } from "./canvas-actions/utility"
 import { drawDiamond } from "./canvas-actions/diamond"
+import * as actions from "../actions"
 
 const DEFAULT_BORDER_COLOR = "rgba(0, 0, 0, 255"
 const DEFAULT_COLOR = "rgba(0, 0, 0, 0)"
