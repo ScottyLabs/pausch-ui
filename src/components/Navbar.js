@@ -1,5 +1,6 @@
 import { Segment, Menu, Icon, Image } from "semantic-ui-react"
 import { useState } from "react"
+import { Link } from 'react-router-dom'
 import pauschBridge from "../assets/pausch-bridge.png"
 
 const Navbar = (props) => {
@@ -9,6 +10,7 @@ const Navbar = (props) => {
     <Segment inverted>
       <Menu inverted pointing secondary size="huge">
         <Menu.Item
+          as={Link} to="/"
           name="Canvas"
           onClick={() => setActiveItem("canvas")}
           style={{
@@ -23,6 +25,7 @@ const Navbar = (props) => {
         </Menu.Item>
         <Menu.Menu position="right">
           <Menu.Item
+            as={Link} to="/"
             name="Canvas"
             active={activeItem === "canvas"}
             onClick={() => setActiveItem("canvas")}
@@ -30,11 +33,14 @@ const Navbar = (props) => {
             <Icon name="paint brush" />
             Canvas
           </Menu.Item>
-          <Menu.Item name="Gallery">
-            <a href={process.env.REACT_APP_GALLERY_LINK} target="_blank" rel="noreferrer">
-              <Icon name="file image outline" />
-              Gallery
-            </a>
+          <Menu.Item
+            as={Link} to="/gallery"
+            name="Gallery"
+            active={activeItem === "gallery"}
+            onClick={() => setActiveItem("gallery")}
+          >
+            <Icon name="file image outline" />
+            Gallery
           </Menu.Item>
         </Menu.Menu>
       </Menu>
