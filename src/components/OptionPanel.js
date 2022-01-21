@@ -36,6 +36,9 @@ const DashedLineOptions = () => {
                   const gap = parseInt(inputGap)
                   dispatch(actions.brush.setDashedLineGap(gap))
                 }
+                else {
+                  dispatch(actions.brush.setDashedLineGap(2))
+                }
               }}
               style={labeledButtonStyle}
             />
@@ -58,6 +61,9 @@ const DashedLineOptions = () => {
                 if (inputSolid !== "") {
                   const solid = parseInt(inputSolid)
                   dispatch(actions.brush.setDashedLineSolid(solid))
+                }
+                else {
+                  dispatch(actions.brush.setDashedLineSolid(2))
                 }
               }}
               style={labeledButtonStyle}
@@ -91,6 +97,9 @@ const DiamondOptions = () => {
                 if (inputRadius !== "") {
                   const radius = parseInt(inputRadius)
                   dispatch(actions.brush.setDiamondRadius(radius))
+                }
+                else {
+                  dispatch(actions.brush.setDiamondRadius(5))
                 }
               }}
               style={labeledButtonStyle}

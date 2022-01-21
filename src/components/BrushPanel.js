@@ -22,6 +22,7 @@ const BrushPanel = (props) => {
   const endSquare = useSelector((store) => store.endSquare)
   const buffer = useSelector((store) => store.buffer)
 
+
   return (
     <Segment>
       <Grid style={{ padding: "5px" }}>

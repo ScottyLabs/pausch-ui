@@ -7,6 +7,7 @@ import { selectCellColor } from "./canvas-actions/eyeDropper"
 import { drawLine, drawDashedLine } from "./canvas-actions/line"
 import { toCoordinates } from "./canvas-actions/utility"
 import { drawDiamond } from "./canvas-actions/diamond"
+import * as actions from "../actions"
 
 const DEFAULT_BORDER_COLOR = "rgba(0, 0, 0, 255"
 const DEFAULT_COLOR = "rgba(0, 0, 0, 0)"
@@ -91,6 +92,8 @@ const CanvasCell = (props) => {
         cell.style.backgroundColor = DEFAULT_COLOR
       } else if (drawMode === "eyedropper") {
         selectCellColor(cell, dispatch)
+        // Switch back to paintbrush automatically
+        dispatch(actions.brush.setDrawMode("paintbrush"))
       } else if (drawMode === "line") {
       } else if (drawMode === "dashed-line") {
       } else if (drawMode === "diamond") {
